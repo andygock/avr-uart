@@ -1,5 +1,7 @@
-Interrupt driven UART Library for 8-bit AVR microcontrollers
-============================================================
+avr-uart
+========
+
+An interrupt driven UART Library for 8-bit AVR microcontrollers
 
 Maintained by Andy Gock
 
@@ -18,8 +20,13 @@ compiler options:
 
 	-DUART_RXn_BUFFER_SIZE=nn -DUART_TXn_BUFFER_SIZE=nn
  
-RXn and TXn refer to UART number, for UART3 with 128 byte buffers, add:
+RXn and TXn refer to UART number, for example to set up UART3 with 128 byte buffers, add:
 
 	-DUART_RX3_BUFFER_SIZE=128 -DUART_TX3_BUFFER_SIZE=128
  
-Supports AVR devices with up to 4 hardware USARTs.
+UART0 is always enabled by default, to enable the other UARTs, add USARTn_ENABLED to your
+compiler symbol options, for example to unable UART1:
+
+	-DUSART1_ENABLED
+ 
+Supports AVR devices with up to 4 hardware UARTs with independant user defined buffer sizes.
