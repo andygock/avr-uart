@@ -81,7 +81,7 @@ Date        Description
 ************************************************************************/
 
 /** 
- *  @defgroup pfleury_uart UART Library
+ *  @defgroup avr-uart UART Library
  *  @code #include <uart.h> @endcode
  * 
  *  @brief Interrupt UART library using the built-in UART with transmit and receive circular buffers. 
@@ -94,11 +94,8 @@ Date        Description
  *
  *  The UART_RXn_BUFFER_SIZE and UART_TXn_BUFFER_SIZE constants define
  *  the size of the circular buffers in bytes. Note that these constants must be a power of 2.
- *  You may need to adapt this constants to your target and your application by adding 
- *  CDEFS += -DUART_RXn_BUFFER_SIZE=nn -DUART_TXn_BUFFER_SIZE=nn to your Makefile.
  *
- *  UART1 enalbed by default, to enable the other UART numbers, add the following (example):
- *  CDEFS += -DUSART1_ENABLED -DUSART2_ENABLED -DUSART3_ENABLED
+ *  You need to define these buffer sizes in uart.h
  *
  *  @note Based on Atmel Application Note AVR306
  *  @author Andy Gock <andy@gock.net>
@@ -107,11 +104,9 @@ Date        Description
  
 /**@{*/
 
-
 #if (__GNUC__ * 100 + __GNUC_MINOR__) < 304
 #error "This library requires AVR-GCC 3.4 or later, update to newer AVR-GCC compiler !"
 #endif
-
 
 /*
  * constants and macros
@@ -146,7 +141,6 @@ Date        Description
  *  @param  baudRate baudrate in bps, e.g. 1200, 2400, 9600     
  */
 #define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) (((xtalCpu)/((baudRate)*8l)-1)|0x8000)
-
 
 /* test if the size of the circular buffers fits into SRAM */
 #if ( (UART_RX_BUFFER_SIZE+UART_TX_BUFFER_SIZE) >= (RAMEND-0x60 ) )
@@ -350,7 +344,6 @@ extern int uart3_available(void);
 extern void uart3_flush(void);
 
 /**@}*/
-
 
 #endif // UART_H 
 

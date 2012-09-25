@@ -121,6 +121,13 @@ Changelog for modifications made by Andy Gock, starting with the current
 
 Date        Description
 =========================================================================
+2012-09-06
+	- Added peek functions
+	- Updated URLs in source and README
+	- Cleaned up some indenting to be more readable
+	- Changed uart_functions() to uart0_functions
+	- Added macros to allow legacy naming
+	
 2012-03-01
 	- Fixed errors in ISR vector names for various devices
 	- Added USART2 and USART3 support to those devices with 4x USARTS.
