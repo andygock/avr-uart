@@ -114,13 +114,26 @@ Date        Description
 
 
 /*
-** constants and macros
-*/
+ * constants and macros
+ */
 
 /* Enable USART 1, 2, 3 as required */
-//#define USART1_ENABLED
-//#define USART2_ENABLED 
-//#define USART3_ENABLED
+#define USART0_ENABLED
+#define USART1_ENABLED
+#define USART2_ENABLED 
+#define USART3_ENABLED
+
+/* Set size of receive and transmit buffers */
+
+#define UART_RX0_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#define UART_RX1_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#define UART_RX2_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#define UART_RX3_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+
+#define UART_TX0_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#define UART_TX1_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#define UART_TX2_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#define UART_TX3_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 
 /** @brief  UART Baudrate Expression
  *  @param  xtalCpu  system clock in Mhz, e.g. 4000000L for 4Mhz          
@@ -134,26 +147,6 @@ Date        Description
  */
 #define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) (((xtalCpu)/((baudRate)*8l)-1)|0x8000)
 
-#ifndef UART_RX_BUFFER_SIZE
-#define UART_RX_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
-#endif
-
-#ifndef UART_TX_BUFFER_SIZE
-#define UART_TX_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
-#endif
-
-#undef UART_RX_BUFFER_SIZE
-#undef UART_TX_BUFFER_SIZE
-
-#define UART_RX0_BUFFER_SIZE 128
-#define UART_RX1_BUFFER_SIZE 1024
-#define UART_RX2_BUFFER_SIZE 128
-#define UART_RX3_BUFFER_SIZE 128
-
-#define UART_TX0_BUFFER_SIZE 128
-#define UART_TX1_BUFFER_SIZE 128
-#define UART_TX2_BUFFER_SIZE 128
-#define UART_TX3_BUFFER_SIZE 128
 
 /* test if the size of the circular buffers fits into SRAM */
 #if ( (UART_RX_BUFFER_SIZE+UART_TX_BUFFER_SIZE) >= (RAMEND-0x60 ) )
