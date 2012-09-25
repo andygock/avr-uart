@@ -488,12 +488,12 @@ Purpose:  called when the UART is ready to transmit the next byte
 
 
 /*************************************************************************
-Function: uart_init()
+Function: uart0_init()
 Purpose:  initialize UART and set baudrate
 Input:    baudrate using macro UART_BAUD_SELECT()
 Returns:  none
 **************************************************************************/
-void uart_init(unsigned int baudrate)
+void uart0_init(unsigned int baudrate)
 {
     UART_TxHead = 0;
     UART_TxTail = 0;
@@ -562,16 +562,16 @@ void uart_init(unsigned int baudrate)
 
 #endif
 
-}/* uart_init */
+}/* uart0_init */
 
 
 /*************************************************************************
-Function: uart_getc()
+Function: uart0_getc()
 Purpose:  return byte from ringbuffer  
 Returns:  lower byte:  received byte from ringbuffer
           higher byte: last receive error
 **************************************************************************/
-unsigned int uart_getc(void)
+unsigned int uart0_getc(void)
 {    
     unsigned char tmptail;
     unsigned char data;
@@ -590,16 +590,16 @@ unsigned int uart_getc(void)
     
     return (UART_LastRxError << 8) + data;
 
-}/* uart_getc */
+}/* uart0_getc */
 
 
 /*************************************************************************
-Function: uart_putc()
+Function: uart0_putc()
 Purpose:  write byte to ringbuffer for transmitting via UART
 Input:    byte to be transmitted
 Returns:  none          
 **************************************************************************/
-void uart_putc(unsigned char data)
+void uart0_putc(unsigned char data)
 {
     unsigned char tmphead;
 
@@ -615,63 +615,63 @@ void uart_putc(unsigned char data)
     /* enable UDRE interrupt */
     UART0_CONTROL    |= _BV(UART0_UDRIE);
 
-}/* uart_putc */
+}/* uart0_putc */
 
 
 /*************************************************************************
-Function: uart_puts()
+Function: uart0_puts()
 Purpose:  transmit string to UART
 Input:    string to be transmitted
 Returns:  none          
 **************************************************************************/
-void uart_puts(const char *s )
+void uart0_puts(const char *s )
 {
     while (*s) 
-      uart_putc(*s++);
+      uart0_putc(*s++);
 
-}/* uart_puts */
+}/* uart0_puts */
 
 
 /*************************************************************************
-Function: uart_puts_p()
+Function: uart0_puts_p()
 Purpose:  transmit string from program memory to UART
 Input:    program memory string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart_puts_p(const char *progmem_s )
+void uart0_puts_p(const char *progmem_s )
 {
     register char c;
     
     while ( (c = pgm_read_byte(progmem_s++)) ) 
-      uart_putc(c);
+      uart0_putc(c);
 
-}/* uart_puts_p */
+}/* uart0_puts_p */
 
 
 
 /*************************************************************************
-Function: uart_available()
+Function: uart0_available()
 Purpose:  Determine the number of bytes waiting in the receive buffer
 Input:    None
 Returns:  Integer number of bytes in the receive buffer
 **************************************************************************/
-int uart_available(void)
+int uart0_available(void)
 {
         return (UART_RX0_BUFFER_MASK + UART_RxHead - UART_RxTail) % UART_RX0_BUFFER_MASK;
-}/* uart_available */
+}/* uart0_available */
 
 
 
 /*************************************************************************
-Function: uart_flush()
+Function: uart0_flush()
 Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
 Input:    None
 Returns:  None
 **************************************************************************/
-void uart_flush(void)
+void uart0_flush(void)
 {
         UART_RxHead = UART_RxTail;
-}/* uart_flush */
+}/* uart0_flush */
 
 #if defined( USART1_ENABLED )
 

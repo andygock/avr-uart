@@ -168,6 +168,15 @@ Date        Description
 #define UART_BUFFER_OVERFLOW  0x0200              /**< receive ringbuffer overflow */
 #define UART_NO_DATA          0x0100              /**< no receive data available   */
 
+/* Macros, to allow use of legacy names */
+
+#define uart_init(b)      uart0_init(b)
+#define uart_getc()       uart0_getc()
+#define uart_putc(d)      uart0_putc(d)
+#define uart_puts(s)      uart0_puts(s)
+#define uart_puts_p(s)    uart0_puts_p(s)
+#define uart_available()  uart0_available()
+#define uart_flush()      uart0_flush()
 
 /*
 ** function prototypes
@@ -178,7 +187,7 @@ Date        Description
    @param   baudrate Specify baudrate using macro UART_BAUD_SELECT()
    @return  none
 */
-extern void uart_init(unsigned int baudrate);
+extern void uart0_init(unsigned int baudrate);
 
 
 /**
@@ -205,7 +214,7 @@ extern void uart_init(unsigned int baudrate);
  *           - \b UART_FRAME_ERROR       
  *             <br>Framing Error by UART
  */
-extern unsigned int uart_getc(void);
+extern unsigned int uart0_getc(void);
 
 
 /**
@@ -213,7 +222,7 @@ extern unsigned int uart_getc(void);
  *  @param   data byte to be transmitted
  *  @return  none
  */
-extern void uart_putc(unsigned char data);
+extern void uart0_putc(unsigned char data);
 
 
 /**
@@ -226,7 +235,7 @@ extern void uart_putc(unsigned char data);
  *  @param   s string to be transmitted
  *  @return  none
  */
-extern void uart_puts(const char *s );
+extern void uart0_puts(const char *s );
 
 
 /**
@@ -238,26 +247,27 @@ extern void uart_puts(const char *s );
  *
  * @param    s program memory string to be transmitted
  * @return   none
- * @see      uart_puts_P
+ * @see      uart0_puts_P
  */
-extern void uart_puts_p(const char *s );
+extern void uart0_puts_p(const char *s );
 
 /**
  * @brief    Macro to automatically put a string constant into program memory
  * \param    __s string in program memory
  */
-#define uart_puts_P(__s)       uart_puts_p(PSTR(__s))
+#define uart_puts_P(__s)       uart0_puts_p(PSTR(__s))
+#define uart0_puts_P(__s)      uart0_puts_p(PSTR(__s))
 
 /**
  *  @brief   Return number of bytes waiting in the receive buffer
  *  @return  bytes waiting in the receive buffer
  */
-extern int uart_available(void);
+extern int uart0_available(void);
 
 /**
  *  @brief   Flush bytes waiting in receive buffer
  */
-extern void uart_flush(void);
+extern void uart0_flush(void);
 
 
 /** @brief  Initialize USART1 (only available on selected ATmegas) @see uart_init */
