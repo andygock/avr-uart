@@ -1,7 +1,7 @@
 /*************************************************************************
 
 	Updated UART library (this one) by Andy Gock
-	http://code.google.com/p/avr-uart-c-library/
+	https://github.com/andygock/avr-uart
 	
 	Based on updated UART library (this one) by Tim Sharpe
 	http://beaststwo.org/avr-uart/index.shtml

@@ -13,6 +13,8 @@ Usage:    see Doxygen manual
 
 Based on original library by Peter Fluery, Tim Sharpe, Nicholas Zambetti.
 
+https://github.com/andygock/avr-uart
+
 LICENSE:
 	Copyright (C) 2012 Andy Gock
 

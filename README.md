@@ -5,6 +5,8 @@ An interrupt driven UART Library for 8-bit AVR microcontrollers
 
 Maintained by Andy Gock
 
+https://github.com/andygock/avr-uart
+
 Derived from original library by Peter Fleury
 
 Interrupt UART library using the built-in UART with transmit and receive circular buffers.
