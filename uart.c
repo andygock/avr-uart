@@ -592,6 +592,33 @@ unsigned int uart0_getc(void)
 
 }/* uart0_getc */
 
+/*************************************************************************
+Function: uart0_peek()
+Purpose:  Returns the next byte (character) of incoming UART data without
+          removing it from the ring buffer. That is, successive calls to
+		  uartN_peek() will return the same character, as will the next
+		  call to uartN_getc()  
+Returns:  lower byte:  next byte in ring buffer
+          higher byte: last receive error
+**************************************************************************/
+unsigned int uart0_peek(void)
+{    
+    unsigned char tmptail;
+    unsigned char data;
+
+
+    if ( UART_RxHead == UART_RxTail ) {
+        return UART_NO_DATA;   /* no data available */
+    }
+    
+    tmptail = (UART_RxTail + 1) & UART_RX0_BUFFER_MASK;
+	
+    /* get data from receive buffer */
+    data = UART_RxBuf[tmptail];
+    
+    return (UART_LastRxError << 8) + data;
+
+}/* uart0_peek */
 
 /*************************************************************************
 Function: uart0_putc()
@@ -799,6 +826,33 @@ unsigned int uart1_getc(void)
 
 }/* uart1_getc */
 
+/*************************************************************************
+Function: uart1_peek()
+Purpose:  Returns the next byte (character) of incoming UART data without
+          removing it from the ring buffer. That is, successive calls to
+		  uartN_peek() will return the same character, as will the next
+		  call to uartN_getc()  
+Returns:  lower byte:  next byte in ring buffer
+          higher byte: last receive error
+**************************************************************************/
+unsigned int uart1_peek(void)
+{    
+    unsigned char tmptail;
+    unsigned char data;
+
+
+    if ( UART1_RxHead == UART1_RxTail ) {
+        return UART_NO_DATA;   /* no data available */
+    }
+    
+    tmptail = (UART1_RxTail + 1) & UART_RX1_BUFFER_MASK;
+	
+    /* get data from receive buffer */
+    data = UART1_RxBuf[tmptail];
+    
+    return (UART1_LastRxError << 8) + data;
+
+}/* uart1_peek */
 
 /*************************************************************************
 Function: uart1_putc()
@@ -1011,6 +1065,33 @@ unsigned int uart2_getc(void)
 
 }/* uart2_getc */
 
+/*************************************************************************
+Function: uart2_peek()
+Purpose:  Returns the next byte (character) of incoming UART data without
+          removing it from the ring buffer. That is, successive calls to
+		  uartN_peek() will return the same character, as will the next
+		  call to uartN_getc()  
+Returns:  lower byte:  next byte in ring buffer
+          higher byte: last receive error
+**************************************************************************/
+unsigned int uart2_peek(void)
+{    
+    unsigned char tmptail;
+    unsigned char data;
+
+
+    if ( UART2_RxHead == UART2_RxTail ) {
+        return UART_NO_DATA;   /* no data available */
+    }
+ 
+    tmptail = (UART2_RxTail + 1) & UART_RX2_BUFFER_MASK;
+	
+    /* get data from receive buffer */
+    data = UART2_RxBuf[tmptail];
+    
+    return (UART2_LastRxError << 8) + data;
+
+}/* uart2_peek */
 
 /*************************************************************************
 Function: uart2_putc()
@@ -1223,6 +1304,33 @@ unsigned int uart3_getc(void)
 
 }/* uart3_getc */
 
+/*************************************************************************
+Function: uart3_peek()
+Purpose:  Returns the next byte (character) of incoming UART data without
+          removing it from the ring buffer. That is, successive calls to
+		  uartN_peek() will return the same character, as will the next
+		  call to uartN_getc()  
+Returns:  lower byte:  next byte in ring buffer
+          higher byte: last receive error
+**************************************************************************/
+unsigned int uart3_peek(void)
+{    
+    unsigned char tmptail;
+    unsigned char data;
+
+
+    if ( UART3_RxHead == UART3_RxTail ) {
+        return UART_NO_DATA;   /* no data available */
+    }
+  
+	tmptail = (UART3_RxTail + 1) & UART_RX3_BUFFER_MASK;
+	
+    /* get data from receive buffer */
+    data = UART3_RxBuf[tmptail];
+    
+    return (UART3_LastRxError << 8) + data;
+
+}/* uart3_peek */
 
 /*************************************************************************
 Function: uart3_putc()

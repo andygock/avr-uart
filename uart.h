@@ -216,6 +216,33 @@ extern void uart0_init(unsigned int baudrate);
  */
 extern unsigned int uart0_getc(void);
 
+/**
+ *  @brief   Peek at next byte in ringbuffer
+ *
+ * Returns the next byte (character) of incoming UART data without removing it from the
+ * internal ring buffer. That is, successive calls to uartN_peek() will return the same
+ * character, as will the next call to uartN_getc().
+ *
+ * UART_NO_DATA is returned when no data is available.
+ *
+ *  @return  lower byte:  next byte in ringbuffer
+ *  @return  higher byte: last receive status
+ *           - \b 0 successfully received data from UART
+ *           - \b UART_NO_DATA           
+ *             <br>no receive data available
+ *           - \b UART_BUFFER_OVERFLOW   
+ *             <br>Receive ringbuffer overflow.
+ *             We are not reading the receive buffer fast enough, 
+ *             one or more received character have been dropped 
+ *           - \b UART_OVERRUN_ERROR     
+ *             <br>Overrun condition by UART.
+ *             A character already present in the UART UDR register was 
+ *             not read by the interrupt handler before the next character arrived,
+ *             one or more received characters have been dropped.
+ *           - \b UART_FRAME_ERROR       
+ *             <br>Framing Error by UART
+ */
+extern unsigned int uart0_peek(void);
 
 /**
  *  @brief   Put byte to ringbuffer for transmitting via UART
@@ -274,6 +301,8 @@ extern void uart0_flush(void);
 extern void uart1_init(unsigned int baudrate);
 /** @brief  Get received byte of USART1 from ringbuffer. (only available on selected ATmega) @see uart_getc */
 extern unsigned int uart1_getc(void);
+/** @brief  Peek at next byte in USART1 ringbuffer */
+extern unsigned int uart1_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART1 (only available on selected ATmega) @see uart_putc */
 extern void uart1_putc(unsigned char data);
 /** @brief  Put string to ringbuffer for transmitting via USART1 (only available on selected ATmega) @see uart_puts */
@@ -292,6 +321,8 @@ extern void uart1_flush(void);
 extern void uart2_init(unsigned int baudrate);
 /** @brief  Get received byte of USART2 from ringbuffer. (only available on selected ATmega) @see uart_getc */
 extern unsigned int uart2_getc(void);
+/** @brief  Peek at next byte in USART2 ringbuffer */
+extern unsigned int uart1_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_putc */
 extern void uart2_putc(unsigned char data);
 /** @brief  Put string to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_puts */
@@ -310,6 +341,8 @@ extern void uart2_flush(void);
 extern void uart3_init(unsigned int baudrate);
 /** @brief  Get received byte of USART3 from ringbuffer. (only available on selected ATmega) @see uart_getc */
 extern unsigned int uart3_getc(void);
+/** @brief  Peek at next byte in USART3 ringbuffer */
+extern unsigned int uart1_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_putc */
 extern void uart3_putc(unsigned char data);
 /** @brief  Put string to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_puts */
