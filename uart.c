@@ -213,6 +213,16 @@ Date        Description
 	#define UART0_CONTROL  UCSRB
 	#define UART0_DATA     UDR
 	#define UART0_UDRIE    UDRIE
+#elif defined(__AVR_ATmega8U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega16U4__) || \
+      defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega32U6__)
+	/* ATmega with one USART, but is called USART1 (untested) */
+	#define ATMEGA_USART1
+	#define UART1_RECEIVE_INTERRUPT   USART1_RX_vect
+	#define UART1_TRANSMIT_INTERRUPT  USART1_UDRE_vect
+	#define UART1_STATUS   UCSR1A
+	#define UART1_CONTROL  UCSR1B
+	#define UART1_DATA     UDR1
+	#define UART1_UDRIE    UDRIE1
 #elif  defined(__AVR_ATmega8515__) || defined(__AVR_ATmega8535__)
 	/* ATmega with one USART */
 	#define ATMEGA_USART
@@ -429,6 +439,8 @@ Date        Description
 		static volatile unsigned char UART3_LastRxError;
 	#endif
 #endif
+
+#if defined(AT90_UART) || defined(ATMEGA_USART) || defined(ATMEGA_USART0)
 
 ISR(UART0_RECEIVE_INTERRUPT)
 /*************************************************************************
@@ -707,6 +719,8 @@ void uart0_flush(void)
 {
         UART_RxHead = UART_RxTail;
 }/* uart0_flush */
+
+#endif
 
 #if defined( USART1_ENABLED )
 
