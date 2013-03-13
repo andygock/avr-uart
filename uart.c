@@ -393,6 +393,18 @@ Date        Description
  */
 
 #if defined( USART0_ENABLED )
+	#if defined( ATMEGA_USART )
+		static volatile unsigned char UART_TxBuf[UART_TX0_BUFFER_SIZE];
+		static volatile unsigned char UART_RxBuf[UART_RX0_BUFFER_SIZE];
+		static volatile unsigned char UART_TxHead;
+		static volatile unsigned char UART_TxTail;
+		static volatile unsigned char UART_RxHead;
+		static volatile unsigned char UART_RxTail;
+		static volatile unsigned char UART_LastRxError;
+	#endif
+#endif
+
+#if defined( USART0_ENABLED )
 	#if defined( ATMEGA_USART0 )
 		static volatile unsigned char UART_TxBuf[UART_TX0_BUFFER_SIZE];
 		static volatile unsigned char UART_RxBuf[UART_RX0_BUFFER_SIZE];
