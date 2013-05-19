@@ -5,7 +5,6 @@
 /************************************************************************
 Title:    Interrupt UART library with receive/transmit circular buffers
 Author:   Andy Gock
-File:     $Id: uart.h,v 1.8.2.1 2007/07/01 11:14:38 peter Exp $
 Software: AVR-GCC 4.1, AVR Libc 1.4
 Hardware: any AVR with built-in UART, tested on AT90S8515 & ATmega8 at 4 Mhz
 License:  GNU General Public License 
@@ -114,9 +113,9 @@ Date        Description
 
 /* Enable USART 1, 2, 3 as required */
 #define USART0_ENABLED
-#define USART1_ENABLED
-#define USART2_ENABLED 
-#define USART3_ENABLED
+//#define USART1_ENABLED
+//#define USART2_ENABLED 
+//#define USART3_ENABLED
 
 /* Set size of receive and transmit buffers */
 
@@ -129,6 +128,22 @@ Date        Description
 #define UART_TX1_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #define UART_TX2_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #define UART_TX3_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+
+#if (UART_RX0_BUFFER_SIZE > 256 & !defined(USART0_LARGE_BUFFER))
+	#error "Buffer too large, please use -DUSART0_LARGE_BUFFER switch in compiler options"
+#endif
+
+#if (UART_RX1_BUFFER_SIZE > 256 & !defined(USART1_LARGE_BUFFER))
+	#error "Buffer too large, please use -DUSART1_LARGE_BUFFER switch in compiler options"
+#endif
+
+#if (UART_RX2_BUFFER_SIZE > 256 & !defined(USART2_LARGE_BUFFER))
+	#error "Buffer too large, please use -DUSART2_LARGE_BUFFER switch in compiler options"
+#endif
+
+#if (UART_RX3_BUFFER_SIZE > 256 & !defined(USART3_LARGE_BUFFER))
+	#error "Buffer too large, please use -DUSART3_LARGE_BUFFER switch in compiler options"
+#endif
 
 /** @brief  UART Baudrate Expression
  *  @param  xtalCpu  system clock in Mhz, e.g. 4000000L for 4Mhz          
@@ -174,7 +189,7 @@ Date        Description
    @param   baudrate Specify baudrate using macro UART_BAUD_SELECT()
    @return  none
 */
-extern void uart0_init(unsigned int baudrate);
+extern void uart0_init(uint16_t baudrate);
 
 
 /**
@@ -201,7 +216,7 @@ extern void uart0_init(unsigned int baudrate);
  *           - \b UART_FRAME_ERROR       
  *             <br>Framing Error by UART
  */
-extern unsigned int uart0_getc(void);
+extern uint16_t uart0_getc(void);
 
 /**
  *  @brief   Peek at next byte in ringbuffer
@@ -229,14 +244,14 @@ extern unsigned int uart0_getc(void);
  *           - \b UART_FRAME_ERROR       
  *             <br>Framing Error by UART
  */
-extern unsigned int uart0_peek(void);
+extern uint16_t uart0_peek(void);
 
 /**
  *  @brief   Put byte to ringbuffer for transmitting via UART
  *  @param   data byte to be transmitted
  *  @return  none
  */
-extern void uart0_putc(unsigned char data);
+extern void uart0_putc(uint8_t data);
 
 
 /**
@@ -285,13 +300,13 @@ extern void uart0_flush(void);
 
 
 /** @brief  Initialize USART1 (only available on selected ATmegas) @see uart_init */
-extern void uart1_init(unsigned int baudrate);
+extern void uart1_init(uint16_t baudrate);
 /** @brief  Get received byte of USART1 from ringbuffer. (only available on selected ATmega) @see uart_getc */
-extern unsigned int uart1_getc(void);
+extern uint16_t uart1_getc(void);
 /** @brief  Peek at next byte in USART1 ringbuffer */
-extern unsigned int uart1_peek(void);
+extern uint16_t uart1_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART1 (only available on selected ATmega) @see uart_putc */
-extern void uart1_putc(unsigned char data);
+extern void uart1_putc(uint8_t data);
 /** @brief  Put string to ringbuffer for transmitting via USART1 (only available on selected ATmega) @see uart_puts */
 extern void uart1_puts(const char *s );
 /** @brief  Put string from program memory to ringbuffer for transmitting via USART1 (only available on selected ATmega) @see uart_puts_p */
@@ -305,13 +320,13 @@ extern void uart1_flush(void);
 
 
 /** @brief  Initialize USART2 (only available on selected ATmegas) @see uart_init */
-extern void uart2_init(unsigned int baudrate);
+extern void uart2_init(uint16_t baudrate);
 /** @brief  Get received byte of USART2 from ringbuffer. (only available on selected ATmega) @see uart_getc */
-extern unsigned int uart2_getc(void);
+extern uint16_t uart2_getc(void);
 /** @brief  Peek at next byte in USART2 ringbuffer */
-extern unsigned int uart1_peek(void);
+extern uint16_t uart1_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_putc */
-extern void uart2_putc(unsigned char data);
+extern void uart2_putc(uint8_t data);
 /** @brief  Put string to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_puts */
 extern void uart2_puts(const char *s );
 /** @brief  Put string from program memory to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_puts_p */
@@ -325,13 +340,13 @@ extern void uart2_flush(void);
 
 
 /** @brief  Initialize USART3 (only available on selected ATmegas) @see uart_init */
-extern void uart3_init(unsigned int baudrate);
+extern void uart3_init(uint16_t baudrate);
 /** @brief  Get received byte of USART3 from ringbuffer. (only available on selected ATmega) @see uart_getc */
-extern unsigned int uart3_getc(void);
+extern uint16_t uart3_getc(void);
 /** @brief  Peek at next byte in USART3 ringbuffer */
-extern unsigned int uart1_peek(void);
+extern uint16_t uart1_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_putc */
-extern void uart3_putc(unsigned char data);
+extern void uart3_putc(uint8_t data);
 /** @brief  Put string to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_puts */
 extern void uart3_puts(const char *s );
 /** @brief  Put string from program memory to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_puts_p */
