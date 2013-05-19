@@ -119,15 +119,31 @@ Date        Description
 
 /* Set size of receive and transmit buffers */
 
-#define UART_RX0_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
-#define UART_RX1_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
-#define UART_RX2_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
-#define UART_RX3_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#if !defined(UART_RX0_BUFFER_SIZE)
+	#define UART_RX0_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#endif
+#if !defined(UART_RX1_BUFFER_SIZE)
+	#define UART_RX1_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#endif
+#if !defined(UART_RX2_BUFFER_SIZE)
+	#define UART_RX2_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#endif
+#if !defined(UART_RX3_BUFFER_SIZE)
+	#define UART_RX3_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
+#endif
 
-#define UART_TX0_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
-#define UART_TX1_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
-#define UART_TX2_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
-#define UART_TX3_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#if !defined(UART_TX0_BUFFER_SIZE)
+	#define UART_TX0_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#endif
+#if !defined(UART_TX1_BUFFER_SIZE)
+	#define UART_TX1_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#endif
+#if !defined(UART_TX2_BUFFER_SIZE)
+	#define UART_TX2_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#endif
+#if !defined(UART_TX3_BUFFER_SIZE)
+	#define UART_TX3_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
+#endif
 
 #if (UART_RX0_BUFFER_SIZE > 256 & !defined(USART0_LARGE_BUFFER))
 	#error "Buffer too large, please use -DUSART0_LARGE_BUFFER switch in compiler options"
