@@ -300,7 +300,7 @@ Date        Description
 	#define UART0_CONTROL  UCSR0B
 	#define UART0_DATA     UDR0
 	#define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATtiny2313__)
+#elif defined(__AVR_ATtiny2313__) || defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny4313__)
 	#define ATMEGA_USART
 	#define UART0_RECEIVE_INTERRUPT   USART_RX_vect 
 	#define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
