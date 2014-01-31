@@ -340,7 +340,7 @@ extern void uart2_init(uint16_t baudrate);
 /** @brief  Get received byte of USART2 from ringbuffer. (only available on selected ATmega) @see uart_getc */
 extern uint16_t uart2_getc(void);
 /** @brief  Peek at next byte in USART2 ringbuffer */
-extern uint16_t uart1_peek(void);
+extern uint16_t uart2_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_putc */
 extern void uart2_putc(uint8_t data);
 /** @brief  Put string to ringbuffer for transmitting via USART2 (only available on selected ATmega) @see uart_puts */
@@ -360,7 +360,7 @@ extern void uart3_init(uint16_t baudrate);
 /** @brief  Get received byte of USART3 from ringbuffer. (only available on selected ATmega) @see uart_getc */
 extern uint16_t uart3_getc(void);
 /** @brief  Peek at next byte in USART3 ringbuffer */
-extern uint16_t uart1_peek(void);
+extern uint16_t uart3_peek(void);
 /** @brief  Put byte to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_putc */
 extern void uart3_putc(uint8_t data);
 /** @brief  Put string to ringbuffer for transmitting via USART3 (only available on selected ATmega) @see uart_puts */
