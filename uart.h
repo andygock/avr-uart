@@ -102,6 +102,8 @@ Date        Description
  */
  
 /**@{*/
+#include <stdint.h>
+#include <avr/io.h>
 
 #if (__GNUC__ * 100 + __GNUC_MINOR__) < 304
 #error "This library requires AVR-GCC 3.4 or later, update to newer AVR-GCC compiler !"
@@ -119,29 +121,29 @@ Date        Description
 
 /* Set size of receive and transmit buffers */
 
-#if !defined(UART_RX0_BUFFER_SIZE)
+#ifndef UART_RX0_BUFFER_SIZE
 	#define UART_RX0_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
 #endif
-#if !defined(UART_RX1_BUFFER_SIZE)
+#ifndef UART_RX1_BUFFER_SIZE
 	#define UART_RX1_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
 #endif
-#if !defined(UART_RX2_BUFFER_SIZE)
+#ifndef UART_RX2_BUFFER_SIZE
 	#define UART_RX2_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
 #endif
-#if !defined(UART_RX3_BUFFER_SIZE)
+#ifndef UART_RX3_BUFFER_SIZE
 	#define UART_RX3_BUFFER_SIZE 128 /**< Size of the circular receive buffer, must be power of 2 */
 #endif
 
-#if !defined(UART_TX0_BUFFER_SIZE)
+#ifndef UART_TX0_BUFFER_SIZE
 	#define UART_TX0_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #endif
-#if !defined(UART_TX1_BUFFER_SIZE)
+#ifndef UART_TX1_BUFFER_SIZE
 	#define UART_TX1_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #endif
-#if !defined(UART_TX2_BUFFER_SIZE)
+#ifndef UART_TX2_BUFFER_SIZE
 	#define UART_TX2_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #endif
-#if !defined(UART_TX3_BUFFER_SIZE)
+#ifndef UART_TX3_BUFFER_SIZE
 	#define UART_TX3_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #endif
 
@@ -174,7 +176,13 @@ Date        Description
 #define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) (((xtalCpu)/((baudRate)*8l)-1)|0x8000)
 
 /* test if the size of the circular buffers fits into SRAM */
-#if ( (UART_RX_BUFFER_SIZE+UART_TX_BUFFER_SIZE) >= (RAMEND-0x60 ) )
+#if defined(USART1_ENABLED) && ( (UART_RX0_BUFFER_SIZE+UART_TX0_BUFFER_SIZE) >= (RAMEND-0x60 ) )
+#error "size of UART_RX_BUFFER_SIZE + UART_TX_BUFFER_SIZE larger than size of SRAM"
+#endif
+#if defined(USART2_ENABLED) && ( (UART_RX1_BUFFER_SIZE+UART_TX1_BUFFER_SIZE) >= (RAMEND-0x60 ) )
+#error "size of UART_RX_BUFFER_SIZE + UART_TX_BUFFER_SIZE larger than size of SRAM"
+#endif
+#if defined(USART3_ENABLED) && ( (UART_RX2_BUFFER_SIZE+UART_RX2_BUFFER_SIZE) >= (RAMEND-0x60 ) )
 #error "size of UART_RX_BUFFER_SIZE + UART_TX_BUFFER_SIZE larger than size of SRAM"
 #endif
 
