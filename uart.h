@@ -147,6 +147,8 @@ Date        Description
 	#define UART_TX3_BUFFER_SIZE 128 /**< Size of the circular transmit buffer, must be power of 2 */
 #endif
 
+/* Check buffer sizes are not too large for 8-bit positioning */
+
 #if (UART_RX0_BUFFER_SIZE > 256 & !defined(USART0_LARGE_BUFFER))
 	#error "Buffer too large, please use -DUSART0_LARGE_BUFFER switch in compiler options"
 #endif
@@ -161,6 +163,24 @@ Date        Description
 
 #if (UART_RX3_BUFFER_SIZE > 256 & !defined(USART3_LARGE_BUFFER))
 	#error "Buffer too large, please use -DUSART3_LARGE_BUFFER switch in compiler options"
+#endif
+
+/* Check buffer sizes are not too large for *_LARGE_BUFFER operation (16-bit positioning) */
+
+#if (UART_RX0_BUFFER_SIZE > 65536)
+	#error "Buffer too large, maximum allowed is 65536 bytes"
+#endif
+
+#if (UART_RX1_BUFFER_SIZE > 65536)
+	#error "Buffer too large, maximum allowed is 65536 bytes"
+#endif
+
+#if (UART_RX2_BUFFER_SIZE > 65536)
+	#error "Buffer too large, maximum allowed is 65536 bytes"
+#endif
+
+#if (UART_RX3_BUFFER_SIZE > 65536)
+	#error "Buffer too large, maximum allowed is 65536 bytes"
 #endif
 
 /** @brief  UART Baudrate Expression
