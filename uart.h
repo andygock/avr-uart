@@ -322,7 +322,7 @@ extern void uart0_puts_p(const char *s );
  *  @brief   Return number of bytes waiting in the receive buffer
  *  @return  bytes waiting in the receive buffer
  */
-extern int uart0_available(void);
+extern uint16_t uart0_available(void);
 
 /**
  *  @brief   Flush bytes waiting in receive buffer
