@@ -15,6 +15,8 @@ An interrupt is generated when the UART has finished transmitting or
 receiving a byte. The interrupt handling routines use circular buffers
 for buffering received and transmitted data.
 
+## Setting up
+
 The `UART_RXn_BUFFER_SIZE` and `UART_TXn_BUFFER_SIZE` constants define
 the size of the circular buffers in bytes. Note that these constants must be a power of 2.
 You may need to adapt this constants to your target and your application by adding to your
@@ -38,3 +40,13 @@ To enable large buffer support (over 256 bytes, up to 2^16 bytes) use:
 Where n = USART number.
 
 Supports AVR devices with up to 4 hardware USARTs.
+
+## Documentation
+
+Doxygen based documentation will be coming soon.
+
+## Notes
+
+### Buffer overflow behaviour
+
+When the RX circular buffer is full, and it receives further data from the UART, a buffer overflow condition occurs. Any new data is dropped. The RX buffer must be read before any more incoming data from the UART is placed into the RX buffer.
