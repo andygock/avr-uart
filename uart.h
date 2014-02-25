@@ -345,7 +345,7 @@ extern void uart1_puts_p(const char *s );
 /** @brief  Macro to automatically put a string constant into program memory */
 #define uart1_puts_P(__s)       uart1_puts_p(PSTR(__s))
 /** @brief   Return number of bytes waiting in the receive buffer */
-extern int uart1_available(void);
+extern uint16_t uart1_available(void);
 /** @brief   Flush bytes waiting in receive buffer */
 extern void uart1_flush(void);
 
@@ -365,7 +365,7 @@ extern void uart2_puts_p(const char *s );
 /** @brief  Macro to automatically put a string constant into program memory */
 #define uart2_puts_P(__s)       uart2_puts_p(PSTR(__s))
 /** @brief   Return number of bytes waiting in the receive buffer */
-extern int uart2_available(void);
+extern uint16_t uart2_available(void);
 /** @brief   Flush bytes waiting in receive buffer */
 extern void uart2_flush(void);
 
@@ -385,7 +385,7 @@ extern void uart3_puts_p(const char *s );
 /** @brief  Macro to automatically put a string constant into program memory */
 #define uart3_puts_P(__s)       uart3_puts_p(PSTR(__s))
 /** @brief   Return number of bytes waiting in the receive buffer */
-extern int uart3_available(void);
+extern uint16_t uart3_available(void);
 /** @brief   Flush bytes waiting in receive buffer */
 extern void uart3_flush(void);
 
