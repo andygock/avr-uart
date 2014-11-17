@@ -187,13 +187,13 @@ Date        Description
  *  @param  xtalCpu  system clock in Mhz, e.g. 4000000L for 4Mhz          
  *  @param  baudRate baudrate in bps, e.g. 1200, 2400, 9600     
  */
-#define UART_BAUD_SELECT(baudRate,xtalCpu) ((xtalCpu)/((baudRate)*16l)-1)
+#define UART_BAUD_SELECT(baudRate,xtalCpu) (((xtalCpu)+8UL*(baudRate))/(16UL*(baudRate))-1UL)
 
 /** @brief  UART Baudrate Expression for ATmega double speed mode
  *  @param  xtalCpu  system clock in Mhz, e.g. 4000000L for 4Mhz           
  *  @param  baudRate baudrate in bps, e.g. 1200, 2400, 9600     
  */
-#define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) (((xtalCpu)/((baudRate)*8l)-1)|0x8000)
+#define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) ((((xtalCpu)+4UL*(baudRate))/(8UL*(baudRate))-1)|0x8000)
 
 /* test if the size of the circular buffers fits into SRAM */
 
