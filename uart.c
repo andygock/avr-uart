@@ -482,6 +482,8 @@ Date        Description
 	#endif
 #endif
 
+#if defined(USART0_ENABLED)
+
 #if defined(AT90_UART) || defined(ATMEGA_USART) || defined(ATMEGA_USART0)
 
 ISR(UART0_RECEIVE_INTERRUPT)
@@ -768,6 +770,8 @@ void uart0_flush(void)
 } /* uart0_flush */
 
 #endif
+
+#endif /* defined(USART0_ENABLED) */
 
 #if defined(USART1_ENABLED)
 
