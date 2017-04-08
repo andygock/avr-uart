@@ -148,41 +148,41 @@ Date        Description
  */
 
 /* size of RX/TX buffers */
-#define UART_RX0_BUFFER_MASK ( UART_RX0_BUFFER_SIZE - 1)
-#define UART_RX1_BUFFER_MASK ( UART_RX1_BUFFER_SIZE - 1)
-#define UART_RX2_BUFFER_MASK ( UART_RX2_BUFFER_SIZE - 1)
-#define UART_RX3_BUFFER_MASK ( UART_RX3_BUFFER_SIZE - 1)
+#define UART_RX0_BUFFER_MASK (UART_RX0_BUFFER_SIZE - 1)
+#define UART_RX1_BUFFER_MASK (UART_RX1_BUFFER_SIZE - 1)
+#define UART_RX2_BUFFER_MASK (UART_RX2_BUFFER_SIZE - 1)
+#define UART_RX3_BUFFER_MASK (UART_RX3_BUFFER_SIZE - 1)
 
-#define UART_TX0_BUFFER_MASK ( UART_TX0_BUFFER_SIZE - 1)
-#define UART_TX1_BUFFER_MASK ( UART_TX1_BUFFER_SIZE - 1)
-#define UART_TX2_BUFFER_MASK ( UART_TX2_BUFFER_SIZE - 1)
-#define UART_TX3_BUFFER_MASK ( UART_TX3_BUFFER_SIZE - 1)
+#define UART_TX0_BUFFER_MASK (UART_TX0_BUFFER_SIZE - 1)
+#define UART_TX1_BUFFER_MASK (UART_TX1_BUFFER_SIZE - 1)
+#define UART_TX2_BUFFER_MASK (UART_TX2_BUFFER_SIZE - 1)
+#define UART_TX3_BUFFER_MASK (UART_TX3_BUFFER_SIZE - 1)
 
-#if ( UART_RX0_BUFFER_SIZE & UART_RX0_BUFFER_MASK )
+#if (UART_RX0_BUFFER_SIZE & UART_RX0_BUFFER_MASK)
 	#error RX0 buffer size is not a power of 2
 #endif
-#if ( UART_TX0_BUFFER_SIZE & UART_TX0_BUFFER_MASK )
+#if (UART_TX0_BUFFER_SIZE & UART_TX0_BUFFER_MASK)
 	#error TX0 buffer size is not a power of 2
 #endif
 
-#if ( UART_RX1_BUFFER_SIZE & UART_RX1_BUFFER_MASK )
+#if (UART_RX1_BUFFER_SIZE & UART_RX1_BUFFER_MASK)
 	#error RX1 buffer size is not a power of 2
 #endif
-#if ( UART_TX1_BUFFER_SIZE & UART_TX1_BUFFER_MASK )
+#if (UART_TX1_BUFFER_SIZE & UART_TX1_BUFFER_MASK)
 	#error TX1 buffer size is not a power of 2
 #endif
 
-#if ( UART_RX2_BUFFER_SIZE & UART_RX2_BUFFER_MASK )
+#if (UART_RX2_BUFFER_SIZE & UART_RX2_BUFFER_MASK)
 	#error RX2 buffer size is not a power of 2
 #endif
-#if ( UART_TX2_BUFFER_SIZE & UART_TX2_BUFFER_MASK )
+#if (UART_TX2_BUFFER_SIZE & UART_TX2_BUFFER_MASK)
 	#error TX2 buffer size is not a power of 2
 #endif
 
-#if ( UART_RX3_BUFFER_SIZE & UART_RX3_BUFFER_MASK )
+#if (UART_RX3_BUFFER_SIZE & UART_RX3_BUFFER_MASK)
 	#error RX3 buffer size is not a power of 2
 #endif
-#if ( UART_TX3_BUFFER_SIZE & UART_TX3_BUFFER_MASK )
+#if (UART_TX3_BUFFER_SIZE & UART_TX3_BUFFER_MASK)
 	#error TX3 buffer size is not a power of 2
 #endif
 
@@ -396,12 +396,12 @@ Date        Description
  *  Module global variables
  */
 
-#if defined( USART0_ENABLED )
-	#if defined( ATMEGA_USART ) || defined( ATMEGA_USART0 )
+#if defined(USART0_ENABLED)
+	#if defined(ATMEGA_USART) || defined(ATMEGA_USART0)
 		static volatile uint8_t UART_TxBuf[UART_TX0_BUFFER_SIZE];
 		static volatile uint8_t UART_RxBuf[UART_RX0_BUFFER_SIZE];
 		
-		#if defined( USART0_LARGE_BUFFER )
+		#if defined(USART0_LARGE_BUFFER)
 			static volatile uint16_t UART_TxHead;
 			static volatile uint16_t UART_TxTail;
 			static volatile uint16_t UART_RxHead;
@@ -418,12 +418,12 @@ Date        Description
 	#endif
 #endif
 
-#if defined( USART1_ENABLED )
-	#if defined( ATMEGA_USART1 )
+#if defined(USART1_ENABLED)
+	#if defined(ATMEGA_USART1)
 		static volatile uint8_t UART1_TxBuf[UART_TX1_BUFFER_SIZE];
 		static volatile uint8_t UART1_RxBuf[UART_RX1_BUFFER_SIZE];
 		
-		#if defined( USART1_LARGE_BUFFER )
+		#if defined(USART1_LARGE_BUFFER)
 			static volatile uint16_t UART1_TxHead;
 			static volatile uint16_t UART1_TxTail;
 			static volatile uint16_t UART1_RxHead;
@@ -439,12 +439,12 @@ Date        Description
 	#endif
 #endif
 
-#if defined( USART2_ENABLED )
-	#if defined( ATMEGA_USART2 )
+#if defined(USART2_ENABLED)
+	#if defined(ATMEGA_USART2)
 		static volatile uint8_t UART2_TxBuf[UART_TX2_BUFFER_SIZE];
 		static volatile uint8_t UART2_RxBuf[UART_RX2_BUFFER_SIZE];
 
-		#if defined( USART2_LARGE_BUFFER )
+		#if defined(USART2_LARGE_BUFFER)
 			static volatile uint16_t UART2_TxHead;
 			static volatile uint16_t UART2_TxTail;
 			static volatile uint16_t UART2_RxHead;
@@ -460,12 +460,12 @@ Date        Description
 	#endif
 #endif
 
-#if defined( USART3_ENABLED )
-	#if defined( ATMEGA_USART3 )
+#if defined(USART3_ENABLED)
+	#if defined(ATMEGA_USART3)
 		static volatile uint8_t UART3_TxBuf[UART_TX3_BUFFER_SIZE];
 		static volatile uint8_t UART3_RxBuf[UART_RX3_BUFFER_SIZE];
 
-		#if defined( USART3_LARGE_BUFFER )
+		#if defined(USART3_LARGE_BUFFER)
 			static volatile uint16_t UART3_TxHead;
 			static volatile uint16_t UART3_TxTail;
 			static volatile uint16_t UART3_RxHead;
@@ -500,20 +500,20 @@ Purpose:  called when the UART has received a character
     data = UART0_DATA;
     
     /* */
-#if defined( AT90_UART )
-    lastRxError = (usr & (_BV(FE)|_BV(DOR)) );
-#elif defined( ATMEGA_USART )
-    lastRxError = (usr & (_BV(FE)|_BV(DOR)) );
-#elif defined( ATMEGA_USART0 )
-    lastRxError = (usr & (_BV(FE0)|_BV(DOR0)) );
-#elif defined ( ATMEGA_UART )
-    lastRxError = (usr & (_BV(FE)|_BV(DOR)) );
+#if defined(AT90_UART)
+    lastRxError = (usr & (_BV(FE)|_BV(DOR)));
+#elif defined(ATMEGA_USART)
+    lastRxError = (usr & (_BV(FE)|_BV(DOR)));
+#elif defined(ATMEGA_USART0)
+    lastRxError = (usr & (_BV(FE0)|_BV(DOR0)));
+#elif defined (ATMEGA_UART)
+    lastRxError = (usr & (_BV(FE)|_BV(DOR)));
 #endif
         
     /* calculate buffer index */ 
-    tmphead = ( UART_RxHead + 1) & UART_RX0_BUFFER_MASK;
+    tmphead = (UART_RxHead + 1) & UART_RX0_BUFFER_MASK;
     
-    if ( tmphead == UART_RxTail ) {
+    if (tmphead == UART_RxTail) {
         /* error: receive buffer overflow */
         lastRxError = UART_BUFFER_OVERFLOW >> 8;
     } else {
@@ -534,7 +534,7 @@ Purpose:  called when the UART is ready to transmit the next byte
 {
     uint16_t tmptail;
 
-    if ( UART_TxHead != UART_TxTail) {
+    if (UART_TxHead != UART_TxTail) {
         /* calculate and store new buffer index */
         tmptail = (UART_TxTail + 1) & UART_TX0_BUFFER_MASK;
         UART_TxTail = tmptail;
@@ -562,20 +562,20 @@ void uart0_init(uint16_t baudrate)
 		UART_RxTail = 0;
 	}
 	
-#if defined( AT90_UART )
+#if defined(AT90_UART)
 	/* set baud rate */
-	UBRR = (uint8_t)baudrate;
+	UBRR = (uint8_t) baudrate;
 
 	/* enable UART receiver and transmitter and receive complete interrupt */
 	UART0_CONTROL = _BV(RXCIE)|_BV(RXEN)|_BV(TXEN);
 
 #elif defined (ATMEGA_USART)
 	/* Set baud rate */
-	if ( baudrate & 0x8000 ) {
+	if (baudrate & 0x8000) {
 		UART0_STATUS = (1<<U2X);  //Enable 2x speed
 		baudrate &= ~0x8000;
 	}
-	UBRRH = (uint8_t)(baudrate>>8);
+	UBRRH = (uint8_t) (baudrate>>8);
 	UBRRL = (uint8_t) baudrate;
 
 	/* Enable USART receiver and transmitter and receive complete interrupt */
@@ -588,9 +588,9 @@ void uart0_init(uint16_t baudrate)
 	UCSRC = (3<<UCSZ0);
 #endif
 
-#elif defined ( ATMEGA_USART0 )
+#elif defined (ATMEGA_USART0)
 	/* Set baud rate */
-	if ( baudrate & 0x8000 ) {
+	if (baudrate & 0x8000) {
 		UART0_STATUS = (1<<U2X0);  //Enable 2x speed
 		baudrate &= ~0x8000;
 	}
@@ -607,13 +607,13 @@ void uart0_init(uint16_t baudrate)
 	UCSR0C = (3<<UCSZ00);
 #endif
 
-#elif defined ( ATMEGA_UART )
+#elif defined (ATMEGA_UART)
 	/* set baud rate */
-	if ( baudrate & 0x8000 ) {
+	if (baudrate & 0x8000) {
 		UART0_STATUS = (1<<U2X);  //Enable 2x speed
 		baudrate &= ~0x8000;
 	}
-	UBRRHI = (uint8_t)(baudrate>>8);
+	UBRRHI = (uint8_t) (baudrate>>8);
 	UBRR   = (uint8_t) baudrate;
 
 	/* Enable UART receiver and transmitter and receive complete interrupt */
@@ -712,7 +712,7 @@ Purpose:  transmit string to UART
 Input:    string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart0_puts(const char *s )
+void uart0_puts(const char *s)
 {
 	while (*s) {
 		uart0_putc(*s++);
@@ -727,11 +727,11 @@ Purpose:  transmit string from program memory to UART
 Input:    program memory string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart0_puts_p(const char *progmem_s )
+void uart0_puts_p(const char *progmem_s)
 {
 	register char c;
 
-	while ( (c = pgm_read_byte(progmem_s++)) ) {
+	while ((c = pgm_read_byte(progmem_s++))) {
 		uart0_putc(c);
 	}
 
@@ -769,12 +769,12 @@ void uart0_flush(void)
 
 #endif
 
-#if defined( USART1_ENABLED )
+#if defined(USART1_ENABLED)
 
 /*
  * these functions are only for ATmegas with two USART
  */
-#if defined( ATMEGA_USART1 )
+#if defined(ATMEGA_USART1)
 
 ISR(UART1_RECEIVE_INTERRUPT)
 /*************************************************************************
@@ -792,12 +792,12 @@ Purpose:  called when the UART1 has received a character
 	data = UART1_DATA;
 
 	/* */
-	lastRxError = (usr & (_BV(FE1)|_BV(DOR1)) );
+	lastRxError = (usr & (_BV(FE1)|_BV(DOR1)));
 
 	/* calculate buffer index */
-	tmphead = ( UART1_RxHead + 1) & UART_RX1_BUFFER_MASK;
+	tmphead = (UART1_RxHead + 1) & UART_RX1_BUFFER_MASK;
 
-	if ( tmphead == UART1_RxTail ) {
+	if (tmphead == UART1_RxTail) {
 		/* error: receive buffer overflow */
 		lastRxError = UART_BUFFER_OVERFLOW >> 8;
 	} else {
@@ -818,7 +818,7 @@ Purpose:  called when the UART1 is ready to transmit the next byte
 {
 	uint16_t tmptail;
 
-	if ( UART1_TxHead != UART1_TxTail) {
+	if (UART1_TxHead != UART1_TxTail) {
 		/* calculate and store new buffer index */
 		tmptail = (UART1_TxTail + 1) & UART_TX1_BUFFER_MASK;
 		UART1_TxTail = tmptail;
@@ -847,11 +847,11 @@ void uart1_init(uint16_t baudrate)
 	}
 
 	/* Set baud rate */
-	if ( baudrate & 0x8000 ) {
+	if (baudrate & 0x8000) {
 		UART1_STATUS = (1<<U2X1);  //Enable 2x speed
 		baudrate &= ~0x8000;
 	}
-	UBRR1H = (uint8_t)(baudrate>>8);
+	UBRR1H = (uint8_t) (baudrate>>8);
 	UBRR1L = (uint8_t) baudrate;
 
 	/* Enable USART receiver and transmitter and receive complete interrupt */
@@ -943,7 +943,7 @@ void uart1_putc(uint8_t data)
 	}
 
 	/* enable UDRE interrupt */
-	UART1_CONTROL    |= _BV(UART1_UDRIE);
+	UART1_CONTROL |= _BV(UART1_UDRIE);
 
 } /* uart1_putc */
 
@@ -954,7 +954,7 @@ Purpose:  transmit string to UART1
 Input:    string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart1_puts(const char *s )
+void uart1_puts(const char *s)
 {
 	while (*s) {
 		uart1_putc(*s++);
@@ -969,11 +969,11 @@ Purpose:  transmit string from program memory to UART1
 Input:    program memory string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart1_puts_p(const char *progmem_s )
+void uart1_puts_p(const char *progmem_s)
 {
 	register char c;
 
-	while ( (c = pgm_read_byte(progmem_s++)) ) {
+	while ((c = pgm_read_byte(progmem_s++))) {
 		uart1_putc(c);
 	}
 
@@ -1014,14 +1014,14 @@ void uart1_flush(void)
 
 #endif
 
-#endif /* defined( USART1_ENABLED ) */
+#endif /* defined(USART1_ENABLED) */
 
-#if defined( USART2_ENABLED )
+#if defined(USART2_ENABLED)
 
 /*
  * these functions are only for ATmegas with four USART
  */
-#if defined( ATMEGA_USART2 )
+#if defined(ATMEGA_USART2)
 
 ISR(UART2_RECEIVE_INTERRUPT)
 /*************************************************************************
@@ -1040,12 +1040,12 @@ Purpose:  called when the UART2 has received a character
 	data = UART2_DATA;
 
 	/* */
-	lastRxError = (usr & (_BV(FE2)|_BV(DOR2)) );
+	lastRxError = (usr & (_BV(FE2)|_BV(DOR2)));
 
 	/* calculate buffer index */
-	tmphead = ( UART2_RxHead + 1) & UART_RX2_BUFFER_MASK;
+	tmphead = (UART2_RxHead + 1) & UART_RX2_BUFFER_MASK;
 
-	if ( tmphead == UART2_RxTail ) {
+	if (tmphead == UART2_RxTail) {
 		/* error: receive buffer overflow */
 		lastRxError = UART_BUFFER_OVERFLOW >> 8;
 	} else {
@@ -1067,7 +1067,7 @@ Purpose:  called when the UART2 is ready to transmit the next byte
 	uint16_t tmptail;
 
 
-	if ( UART2_TxHead != UART2_TxTail) {
+	if (UART2_TxHead != UART2_TxTail) {
 		/* calculate and store new buffer index */
 		tmptail = (UART2_TxTail + 1) & UART_TX2_BUFFER_MASK;
 		UART2_TxTail = tmptail;
@@ -1096,11 +1096,11 @@ void uart2_init(uint16_t baudrate)
 	}
 
 	/* Set baud rate */
-	if ( baudrate & 0x8000 ) {
+	if (baudrate & 0x8000) {
 		UART2_STATUS = (1<<U2X2);  //Enable 2x speed
 		baudrate &= ~0x8000;
 	}
-	UBRR2H = (uint8_t)(baudrate>>8);
+	UBRR2H = (uint8_t) (baudrate>>8);
 	UBRR2L = (uint8_t) baudrate;
 
 	/* Enable USART receiver and transmitter and receive complete interrupt */
@@ -1193,7 +1193,7 @@ void uart2_putc(uint8_t data)
 	}
 
 	/* enable UDRE interrupt */
-	UART2_CONTROL    |= _BV(UART2_UDRIE);
+	UART2_CONTROL |= _BV(UART2_UDRIE);
 
 } /* uart2_putc */
 
@@ -1204,7 +1204,7 @@ Purpose:  transmit string to UART2
 Input:    string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart2_puts(const char *s )
+void uart2_puts(const char *s)
 {
 	while (*s)
 		uart2_putc(*s++);
@@ -1218,11 +1218,11 @@ Purpose:  transmit string from program memory to UART2
 Input:    program memory string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart2_puts_p(const char *progmem_s )
+void uart2_puts_p(const char *progmem_s)
 {
 	register char c;
 
-	while ( (c = pgm_read_byte(progmem_s++)) ) {
+	while ((c = pgm_read_byte(progmem_s++))) {
 		uart2_putc(c);
 	}
 
@@ -1258,14 +1258,14 @@ void uart2_flush(void)
 
 #endif
 
-#endif /* defined( USART2_ENABLED ) */
+#endif /* defined(USART2_ENABLED) */
 
-#if defined( USART3_ENABLED )
+#if defined(USART3_ENABLED)
 
 /*
  * these functions are only for ATmegas with four USART
  */
-#if defined( ATMEGA_USART3 )
+#if defined(ATMEGA_USART3)
 
 ISR(UART3_RECEIVE_INTERRUPT)
 /*************************************************************************
@@ -1278,18 +1278,17 @@ Purpose:  called when the UART3 has received a character
 	uint8_t usr;
 	uint8_t lastRxError;
 
-
 	/* read UART status register and UART data register */
 	usr  = UART3_STATUS;
 	data = UART3_DATA;
 
 	/* */
-	lastRxError = (usr & (_BV(FE3)|_BV(DOR3)) );
+	lastRxError = (usr & (_BV(FE3)|_BV(DOR3)));
 
 	/* calculate buffer index */
-	tmphead = ( UART3_RxHead + 1) & UART_RX3_BUFFER_MASK;
+	tmphead = (UART3_RxHead + 1) & UART_RX3_BUFFER_MASK;
 
-	if ( tmphead == UART3_RxTail ) {
+	if (tmphead == UART3_RxTail) {
 		/* error: receive buffer overflow */
 		lastRxError = UART_BUFFER_OVERFLOW >> 8;
 	} else {
@@ -1311,7 +1310,7 @@ Purpose:  called when the UART3 is ready to transmit the next byte
 	uint16_t tmptail;
 
 
-	if ( UART3_TxHead != UART3_TxTail) {
+	if (UART3_TxHead != UART3_TxTail) {
 		/* calculate and store new buffer index */
 		tmptail = (UART3_TxTail + 1) & UART_TX3_BUFFER_MASK;
 		UART3_TxTail = tmptail;
@@ -1340,7 +1339,7 @@ void uart3_init(uint16_t baudrate)
 	}
 
 	/* Set baud rate */
-	if ( baudrate & 0x8000 ) {
+	if (baudrate & 0x8000) {
 		UART3_STATUS = (1<<U2X3);  //Enable 2x speed
 		baudrate &= ~0x8000;
 	}
@@ -1371,7 +1370,7 @@ uint16_t uart3_getc(void)
 	uint8_t data;
 
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {
-		if ( UART3_RxHead == UART3_RxTail ) {
+		if (UART3_RxHead == UART3_RxTail) {
 			return UART_NO_DATA;   /* no data available */
 		}
 
@@ -1447,7 +1446,7 @@ Purpose:  transmit string to UART3
 Input:    string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart3_puts(const char *s )
+void uart3_puts(const char *s)
 {
 	while (*s) {
 		uart3_putc(*s++);
@@ -1462,11 +1461,11 @@ Purpose:  transmit string from program memory to UART3
 Input:    program memory string to be transmitted
 Returns:  none
 **************************************************************************/
-void uart3_puts_p(const char *progmem_s )
+void uart3_puts_p(const char *progmem_s)
 {
 	register char c;
 
-	while ( (c = pgm_read_byte(progmem_s++)) ) {
+	while ((c = pgm_read_byte(progmem_s++))) {
 		uart3_putc(c);
 	}
 
@@ -1507,4 +1506,4 @@ void uart3_flush(void)
 
 #endif
 
-#endif /* defined( USART3_ENABLED ) */
+#endif /* defined(USART3_ENABLED) */
