@@ -140,6 +140,7 @@ Date        Description
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
+#include <util/atomic.h>
 #include "uart.h"
 
 /*
@@ -554,11 +555,13 @@ Returns:  none
 **************************************************************************/
 void uart0_init(uint16_t baudrate)
 {
-	UART_TxHead = 0;
-	UART_TxTail = 0;
-	UART_RxHead = 0;
-	UART_RxTail = 0;
-
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART_TxHead = 0;
+		UART_TxTail = 0;
+		UART_RxHead = 0;
+		UART_RxTail = 0;
+	}
+	
 #if defined( AT90_UART )
 	/* set baud rate */
 	UBRR = (uint8_t)baudrate;
@@ -632,14 +635,16 @@ uint16_t uart0_getc(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART_RxHead == UART_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART_RxHead == UART_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
+
+		/* calculate / store buffer index */
+		tmptail = (UART_RxTail + 1) & UART_RX0_BUFFER_MASK;
+		UART_RxTail = tmptail;
 	}
-
-	/* calculate /store buffer index */
-	tmptail = (UART_RxTail + 1) & UART_RX0_BUFFER_MASK;
-	UART_RxTail = tmptail;
-
+	
 	/* get data from receive buffer */
 	data = UART_RxBuf[tmptail];
 
@@ -661,11 +666,13 @@ uint16_t uart0_peek(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART_RxHead == UART_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART_RxHead == UART_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
+	
+		tmptail = (UART_RxTail + 1) & UART_RX0_BUFFER_MASK;
 	}
-
-	tmptail = (UART_RxTail + 1) & UART_RX0_BUFFER_MASK;
 
 	/* get data from receive buffer */
 	data = UART_RxBuf[tmptail];
@@ -684,17 +691,17 @@ void uart0_putc(uint8_t data)
 {
 	uint16_t tmphead;
 
-	tmphead  = (UART_TxHead + 1) & UART_TX0_BUFFER_MASK;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		tmphead = (UART_TxHead + 1) & UART_TX0_BUFFER_MASK;
 
-	while ( tmphead == UART_TxTail ) {
-		;/* wait for free space in buffer */
+		while (tmphead == UART_TxTail); /* wait for free space in buffer */
+
+		UART_TxBuf[tmphead] = data;
+		UART_TxHead = tmphead;
 	}
 
-	UART_TxBuf[tmphead] = data;
-	UART_TxHead = tmphead;
-
 	/* enable UDRE interrupt */
-	UART0_CONTROL    |= _BV(UART0_UDRIE);
+	UART0_CONTROL |= _BV(UART0_UDRIE);
 
 } /* uart0_putc */
 
@@ -740,7 +747,11 @@ Returns:  Integer number of bytes in the receive buffer
 **************************************************************************/
 uint16_t uart0_available(void)
 {
-	return (UART_RX0_BUFFER_SIZE + UART_RxHead - UART_RxTail) & UART_RX0_BUFFER_MASK;
+	uint16_t ret;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		ret = (UART_RX0_BUFFER_SIZE + UART_RxHead - UART_RxTail) & UART_RX0_BUFFER_MASK;
+	}
+	return ret;
 } /* uart0_available */
 
 /*************************************************************************
@@ -751,7 +762,9 @@ Returns:  None
 **************************************************************************/
 void uart0_flush(void)
 {
-	UART_RxHead = UART_RxTail;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART_RxHead = UART_RxTail;
+	}
 } /* uart0_flush */
 
 #endif
@@ -826,10 +839,12 @@ Returns:  none
 **************************************************************************/
 void uart1_init(uint16_t baudrate)
 {
-	UART1_TxHead = 0;
-	UART1_TxTail = 0;
-	UART1_RxHead = 0;
-	UART1_RxTail = 0;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {	
+		UART1_TxHead = 0;
+		UART1_TxTail = 0;
+		UART1_RxHead = 0;
+		UART1_RxTail = 0;
+	}
 
 	/* Set baud rate */
 	if ( baudrate & 0x8000 ) {
@@ -862,13 +877,15 @@ uint16_t uart1_getc(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART1_RxHead == UART1_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
-	}
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART1_RxHead == UART1_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
 
-	/* calculate /store buffer index */
-	tmptail = (UART1_RxTail + 1) & UART_RX1_BUFFER_MASK;
-	UART1_RxTail = tmptail;
+		/* calculate / store buffer index */
+		tmptail = (UART1_RxTail + 1) & UART_RX1_BUFFER_MASK;
+		UART1_RxTail = tmptail;
+	}
 
 	/* get data from receive buffer */
 	data = UART1_RxBuf[tmptail];
@@ -891,12 +908,14 @@ uint16_t uart1_peek(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART1_RxHead == UART1_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART1_RxHead == UART1_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
+	
+		tmptail = (UART1_RxTail + 1) & UART_RX1_BUFFER_MASK;
 	}
-
-	tmptail = (UART1_RxTail + 1) & UART_RX1_BUFFER_MASK;
-
+	
 	/* get data from receive buffer */
 	data = UART1_RxBuf[tmptail];
 
@@ -914,14 +933,14 @@ void uart1_putc(uint8_t data)
 {
 	uint16_t tmphead;
 
-	tmphead  = (UART1_TxHead + 1) & UART_TX1_BUFFER_MASK;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		tmphead  = (UART1_TxHead + 1) & UART_TX1_BUFFER_MASK;
 
-	while ( tmphead == UART1_TxTail ) {
-		;/* wait for free space in buffer */
+		while (tmphead == UART1_TxTail); /* wait for free space in buffer */
+
+		UART1_TxBuf[tmphead] = data;
+		UART1_TxHead = tmphead;
 	}
-
-	UART1_TxBuf[tmphead] = data;
-	UART1_TxHead = tmphead;
 
 	/* enable UDRE interrupt */
 	UART1_CONTROL    |= _BV(UART1_UDRIE);
@@ -970,7 +989,12 @@ Returns:  Integer number of bytes in the receive buffer
 **************************************************************************/
 uint16_t uart1_available(void)
 {
-	return (UART_RX1_BUFFER_SIZE + UART1_RxHead - UART1_RxTail) & UART_RX1_BUFFER_MASK;
+	uint16_t ret;
+	
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		ret = (UART_RX1_BUFFER_SIZE + UART1_RxHead - UART1_RxTail) & UART_RX1_BUFFER_MASK;
+	}
+	return ret;
 } /* uart1_available */
 
 
@@ -983,7 +1007,9 @@ Returns:  None
 **************************************************************************/
 void uart1_flush(void)
 {
-	UART1_RxHead = UART1_RxTail;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART1_RxHead = UART1_RxTail;
+	}
 } /* uart1_flush */
 
 #endif
@@ -1062,11 +1088,12 @@ Returns:  none
 **************************************************************************/
 void uart2_init(uint16_t baudrate)
 {
-	UART2_TxHead = 0;
-	UART2_TxTail = 0;
-	UART2_RxHead = 0;
-	UART2_RxTail = 0;
-
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART2_TxHead = 0;
+		UART2_TxTail = 0;
+		UART2_RxHead = 0;
+		UART2_RxTail = 0;
+	}
 
 	/* Set baud rate */
 	if ( baudrate & 0x8000 ) {
@@ -1099,13 +1126,16 @@ uint16_t uart2_getc(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART2_RxHead == UART2_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
-	}
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART2_RxHead == UART2_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
 
-	/* calculate /store buffer index */
-	tmptail = (UART2_RxTail + 1) & UART_RX2_BUFFER_MASK;
-	UART2_RxTail = tmptail;
+		/* calculate / store buffer index */
+	
+		tmptail = (UART2_RxTail + 1) & UART_RX2_BUFFER_MASK;
+		UART2_RxTail = tmptail;
+	}
 
 	/* get data from receive buffer */
 	data = UART2_RxBuf[tmptail];
@@ -1128,12 +1158,13 @@ uint16_t uart2_peek(void)
 	uint16_t tmptail;
 	uint8_t data;
 
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART2_RxHead == UART2_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
 
-	if ( UART2_RxHead == UART2_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
+		tmptail = (UART2_RxTail + 1) & UART_RX2_BUFFER_MASK;
 	}
-
-	tmptail = (UART2_RxTail + 1) & UART_RX2_BUFFER_MASK;
 
 	/* get data from receive buffer */
 	data = UART2_RxBuf[tmptail];
@@ -1152,15 +1183,14 @@ void uart2_putc(uint8_t data)
 {
 	uint16_t tmphead;
 
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		tmphead  = (UART2_TxHead + 1) & UART_TX2_BUFFER_MASK;
 
-	tmphead  = (UART2_TxHead + 1) & UART_TX2_BUFFER_MASK;
+		while (tmphead == UART2_TxTail); /* wait for free space in buffer */
 
-	while ( tmphead == UART2_TxTail ) {
-		;/* wait for free space in buffer */
+		UART2_TxBuf[tmphead] = data;
+		UART2_TxHead = tmphead;
 	}
-
-	UART2_TxBuf[tmphead] = data;
-	UART2_TxHead = tmphead;
 
 	/* enable UDRE interrupt */
 	UART2_CONTROL    |= _BV(UART2_UDRIE);
@@ -1221,7 +1251,9 @@ Returns:  None
 **************************************************************************/
 void uart2_flush(void)
 {
-	UART2_RxHead = UART2_RxTail;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART2_RxHead = UART2_RxTail;
+	}
 } /* uart2_flush */
 
 #endif
@@ -1300,10 +1332,12 @@ Returns:  none
 **************************************************************************/
 void uart3_init(uint16_t baudrate)
 {
-	UART3_TxHead = 0;
-	UART3_TxTail = 0;
-	UART3_RxHead = 0;
-	UART3_RxTail = 0;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART3_TxHead = 0;
+		UART3_TxTail = 0;
+		UART3_RxHead = 0;
+		UART3_RxTail = 0;
+	}
 
 	/* Set baud rate */
 	if ( baudrate & 0x8000 ) {
@@ -1336,13 +1370,15 @@ uint16_t uart3_getc(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART3_RxHead == UART3_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
-	}
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if ( UART3_RxHead == UART3_RxTail ) {
+			return UART_NO_DATA;   /* no data available */
+		}
 
-	/* calculate /store buffer index */
-	tmptail = (UART3_RxTail + 1) & UART_RX3_BUFFER_MASK;
-	UART3_RxTail = tmptail;
+		/* calculate / store buffer index */
+		tmptail = (UART3_RxTail + 1) & UART_RX3_BUFFER_MASK;
+		UART3_RxTail = tmptail;
+	}
 
 	/* get data from receive buffer */
 	data = UART3_RxBuf[tmptail];
@@ -1365,11 +1401,13 @@ uint16_t uart3_peek(void)
 	uint16_t tmptail;
 	uint8_t data;
 
-	if ( UART3_RxHead == UART3_RxTail ) {
-		return UART_NO_DATA;   /* no data available */
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		if (UART3_RxHead == UART3_RxTail) {
+			return UART_NO_DATA;   /* no data available */
+		}
+	
+		tmptail = (UART3_RxTail + 1) & UART_RX3_BUFFER_MASK;
 	}
-
-	tmptail = (UART3_RxTail + 1) & UART_RX3_BUFFER_MASK;
 
 	/* get data from receive buffer */
 	data = UART3_RxBuf[tmptail];
@@ -1388,15 +1426,14 @@ void uart3_putc(uint8_t data)
 {
 	uint16_t tmphead;
 
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		tmphead  = (UART3_TxHead + 1) & UART_TX3_BUFFER_MASK;
 
-	tmphead  = (UART3_TxHead + 1) & UART_TX3_BUFFER_MASK;
+		while (tmphead == UART3_TxTail); /* wait for free space in buffer */
 
-	while ( tmphead == UART3_TxTail ) {
-		;/* wait for free space in buffer */
+		UART3_TxBuf[tmphead] = data;
+		UART3_TxHead = tmphead;
 	}
-
-	UART3_TxBuf[tmphead] = data;
-	UART3_TxHead = tmphead;
 
 	/* enable UDRE interrupt */
 	UART3_CONTROL    |= _BV(UART3_UDRIE);
@@ -1445,7 +1482,12 @@ Returns:  Integer number of bytes in the receive buffer
 **************************************************************************/
 uint16_t uart3_available(void)
 {
-	return (UART_RX3_BUFFER_SIZE + UART3_RxHead - UART3_RxTail) & UART_RX3_BUFFER_MASK;
+	uint16_t ret;
+	
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		ret = (UART_RX3_BUFFER_SIZE + UART3_RxHead - UART3_RxTail) & UART_RX3_BUFFER_MASK;
+	}
+	return ret;
 } /* uart3_available */
 
 
@@ -1458,7 +1500,9 @@ Returns:  None
 **************************************************************************/
 void uart3_flush(void)
 {
-	UART3_RxHead = UART3_RxTail;
+	ATOMIC_BLOCK(ATOMIC_FORCEON) {
+		UART3_RxHead = UART3_RxTail;
+	}
 } /* uart3_flush */
 
 #endif
