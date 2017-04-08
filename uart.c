@@ -749,7 +749,7 @@ uint16_t uart0_available(void)
 {
 	uint16_t ret;
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {
-		ret = (UART_RX0_BUFFER_SIZE + UART_RxHead - UART_RxTail) & UART_RX0_BUFFER_MASK;
+		ret = (UART_RX0_BUFFER_MASK + UART_RxHead - UART_RxTail) % UART_RX0_BUFFER_MASK;
 	}
 	return ret;
 } /* uart0_available */
@@ -992,7 +992,7 @@ uint16_t uart1_available(void)
 	uint16_t ret;
 	
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {
-		ret = (UART_RX1_BUFFER_SIZE + UART1_RxHead - UART1_RxTail) & UART_RX1_BUFFER_MASK;
+		ret = (UART_RX1_BUFFER_MASK + UART1_RxHead - UART1_RxTail) % UART_RX1_BUFFER_MASK;
 	}
 	return ret;
 } /* uart1_available */
@@ -1238,7 +1238,7 @@ Returns:  Integer number of bytes in the receive buffer
 **************************************************************************/
 uint16_t uart2_available(void)
 {
-	return (UART_RX2_BUFFER_SIZE + UART2_RxHead - UART2_RxTail) & UART_RX2_BUFFER_MASK;
+	return (UART_RX2_BUFFER_MASK + UART2_RxHead - UART2_RxTail) % UART_RX2_BUFFER_MASK;
 } /* uart2_available */
 
 
@@ -1484,7 +1484,7 @@ uint16_t uart3_available(void)
 	uint16_t ret;
 	
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {
-		ret = (UART_RX3_BUFFER_SIZE + UART3_RxHead - UART3_RxTail) & UART_RX3_BUFFER_MASK;
+		ret = (UART_RX3_BUFFER_MASK + UART3_RxHead - UART3_RxTail) % UART_RX3_BUFFER_MASK;
 	}
 	return ret;
 } /* uart3_available */

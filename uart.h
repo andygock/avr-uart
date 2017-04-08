@@ -167,20 +167,20 @@ Date        Description
 
 /* Check buffer sizes are not too large for *_LARGE_BUFFER operation (16-bit positioning) */
 
-#if (UART_RX0_BUFFER_SIZE > 65536)
-	#error "Buffer too large, maximum allowed is 65536 bytes"
+#if (UART_RX0_BUFFER_SIZE > 32768)
+	#error "Buffer too large, maximum allowed is 32768 bytes"
 #endif
 
-#if (UART_RX1_BUFFER_SIZE > 65536)
-	#error "Buffer too large, maximum allowed is 65536 bytes"
+#if (UART_RX1_BUFFER_SIZE > 32768)
+	#error "Buffer too large, maximum allowed is 32768 bytes"
 #endif
 
-#if (UART_RX2_BUFFER_SIZE > 65536)
-	#error "Buffer too large, maximum allowed is 65536 bytes"
+#if (UART_RX2_BUFFER_SIZE > 32768)
+	#error "Buffer too large, maximum allowed is 32768 bytes"
 #endif
 
-#if (UART_RX3_BUFFER_SIZE > 65536)
-	#error "Buffer too large, maximum allowed is 65536 bytes"
+#if (UART_RX3_BUFFER_SIZE > 32768)
+	#error "Buffer too large, maximum allowed is 32768 bytes"
 #endif
 
 /** @brief  UART Baudrate Expression
