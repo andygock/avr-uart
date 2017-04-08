@@ -36,10 +36,14 @@ to your compiler options (or symbol options), for the relevant USART number:
 To enable large buffer support (over 256 bytes, up to 2^16 bytes) use:
 
 	-DUSARTn_LARGE_BUFFER
-	
+
 Where n = USART number.
 
 Supports AVR devices with up to 4 hardware USARTs.
+
+### Compiler flags
+
+- AVR/GNU C compiler requires the `-std=gnu99` flag.
 
 ## Documentation
 
