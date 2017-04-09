@@ -114,7 +114,10 @@ Date        Description
  */
 
 /* Enable USART 1, 2, 3 as required */
-#define USART0_ENABLED
+/* Can be defined in compiler symbol setup with -D option (preferred) */
+#ifndef USART0_ENABLED
+	#define USART0_ENABLED /* Enabled by default */
+#endif
 //#define USART1_ENABLED
 //#define USART2_ENABLED 
 //#define USART3_ENABLED
