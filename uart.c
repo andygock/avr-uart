@@ -772,7 +772,7 @@ uint16_t uart0_available(void)
 
 /*************************************************************************
 Function: uart0_flush()
-Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
+Purpose:  Flush bytes waiting the receive buffer. Actually ignores them.
 Input:    None
 Returns:  None
 **************************************************************************/
@@ -1031,7 +1031,7 @@ uint16_t uart1_available(void)
 
 /*************************************************************************
 Function: uart1_flush()
-Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
+Purpose:  Flush bytes waiting the receive buffer. Actually ignores them.
 Input:    None
 Returns:  None
 **************************************************************************/
@@ -1292,7 +1292,7 @@ uint16_t uart2_available(void)
 
 /*************************************************************************
 Function: uart2_flush()
-Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
+Purpose:  Flush bytes waiting the receive buffer. Actually ignores them.
 Input:    None
 Returns:  None
 **************************************************************************/
@@ -1552,7 +1552,7 @@ uint16_t uart3_available(void)
 
 /*************************************************************************
 Function: uart3_flush()
-Purpose:  Flush bytes waiting the receive buffer.  Acutally ignores them.
+Purpose:  Flush bytes waiting the receive buffer. Actually ignores them.
 Input:    None
 Returns:  None
 **************************************************************************/
