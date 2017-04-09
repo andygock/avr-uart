@@ -1,5 +1,16 @@
 /*************************************************************************
 
+	Title:    Interrupt UART library with receive/transmit circular buffers
+	Author:   Andy Gock
+	Software: AVR-GCC 4.1, AVR Libc 1.4
+	Hardware: any AVR with built-in UART, tested on AT90S8515 & ATmega8 at 4 Mhz
+	License:  GNU General Public License
+	Usage:    see README.md and Doxygen manual
+
+	Based on original library by Peter Fluery, Tim Sharpe, Nicholas Zambetti.
+
+	https://github.com/andygock/avr-uart
+
 	Updated UART library (this one) by Andy Gock
 	https://github.com/andygock/avr-uart
 
@@ -12,31 +23,10 @@
 *************************************************************************/
 
 /*************************************************************************
-Title:    Interrupt UART library with receive/transmit circular buffers
-Author:   Peter Fleury <pfleury@gmx.ch>   http://jump.to/fleury
-Software: AVR-GCC 4.1, AVR Libc 1.4.6 or higher
-Hardware: any AVR with built-in UART,
-License:  GNU General Public License
-
-DESCRIPTION:
-    An interrupt is generated when the UART has finished transmitting or
-    receiving a byte. The interrupt handling routines use circular buffers
-    for buffering received and transmitted data.
-
-    The UART_RX_BUFFERn_SIZE and UART_TX_BUFFERn_SIZE variables define
-    the buffer size in bytes. Note that these variables must be a
-    power of 2.
-
-USAGE:
-    Refer to the header file uart.h for a description of the routines.
-    See also example test_uart.c.
-
-NOTES:
-	Based on original library by Peter Fluery, Tim Sharpe, Nicholas Zambetti.
-    Based on Atmel Application Note AVR306
 
 LICENSE:
 	Copyright (C) 2012 Andy Gock
+	Copyright (C) 2006 Peter Fleury
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,19 +37,6 @@ LICENSE:
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-
-LICENSE:
-    Copyright (C) 2006 Peter Fleury
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
 
 *************************************************************************/
 
@@ -112,29 +89,6 @@ Date        Description
 05/13/2009  Changed Interrupt Service Routine label from the old "SIGNAL" to
 			the "ISR" format introduced in AVR-Libc v1.4.0.
 
-************************************************************************/
-
-/************************************************************************
-Changelog for modifications made by Andy Gock, starting with the current
-  library version by Tim Sharpe as of 05/13/2009.
-
-Date        Description
-=========================================================================
-2013-05-19
-	- You can now use ring buffers over 256 bytes in size
-	- Used "uint16_t" instead of "unsigned int" etc
-
-2012-09-06
-	- Added peek functions
-	- Updated URLs in source and README
-	- Cleaned up some indenting to be more readable
-	- Changed uart_functions() to uart0_functions
-	- Added macros to allow legacy naming
-
-2012-03-01
-	- Fixed errors in ISR vector names for various devices
-	- Added USART2 and USART3 support to those devices with 4x USARTS.
-	- Selective enabling of USART0,1,2,3 as required. (set in uart.h)
 ************************************************************************/
 
 #include <avr/io.h>
