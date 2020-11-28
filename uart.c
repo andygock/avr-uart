@@ -531,7 +531,11 @@ Purpose:  initialize UART and set baudrate
 Input:    baudrate using macro UART_BAUD_SELECT()
 Returns:  none
 **************************************************************************/
+#if defined (AVR1_USART0)
 void uart0_init(uint32_t baudrate)
+#else
+void uart0_init(uint16_t baudrate)
+#endif
 {
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {
 		UART_TxHead = 0;
