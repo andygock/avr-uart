@@ -343,14 +343,12 @@ Date        Description
 	#define UART1_DATA     UDR1
 	#define UART1_UDRIE    UDRIE1
 #elif defined(__AVR_ATtiny814__)
-    /* AVR-1 with USART */
+  /* AVR-1 with USART */
 	#define AVR1_USART0
 	#define UART0_RECEIVE_INTERRUPT   USART0_RXC_vect
 	#define UART0_TRANSMIT_INTERRUPT  USART0_DRE_vect
-
-    #define USART0_BAUD_RATE(_br_)      (uint16_t)((float)(F_CPU * 64 / (16 * (float)(_br_)) + 0.5))
-
-//	#error "AVR ATtiny814 currently not supported by this libaray !"
+  #define USART0_BAUD_RATE(_br_)      (uint16_t)((float)(F_CPU * 64 / (16 * (float)(_br_)) + 0.5))
+  //	#error "AVR ATtiny814 currently not supported by this libaray !"
 #else
 	#error "no UART definition for MCU available"
 #endif
