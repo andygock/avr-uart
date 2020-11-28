@@ -342,6 +342,15 @@ Date        Description
 	#define UART1_CONTROL  UCSR1B
 	#define UART1_DATA     UDR1
 	#define UART1_UDRIE    UDRIE1
+#elif defined(__AVR_ATtiny814__)
+    /* AVR-1 with USART */
+	#define AVR1_USART0
+	#define UART0_RECEIVE_INTERRUPT   USART0_RXC_vect
+	#define UART0_TRANSMIT_INTERRUPT  USART0_DRE_vect
+
+    #define USART0_BAUD_RATE(_br_)      (uint16_t)((float)(F_CPU * 64 / (16 * (float)(_br_)) + 0.5))
+
+//	#error "AVR ATtiny814 currently not supported by this libaray !"
 #else
 	#error "no UART definition for MCU available"
 #endif
@@ -351,7 +360,7 @@ Date        Description
  */
 
 #if defined(USART0_ENABLED)
-	#if defined(ATMEGA_USART) || defined(ATMEGA_USART0)
+    #if defined(ATMEGA_USART) || defined(ATMEGA_USART0) || defined (AVR1_USART0)
 		static volatile uint8_t UART_TxBuf[UART_TX0_BUFFER_SIZE];
 		static volatile uint8_t UART_RxBuf[UART_RX0_BUFFER_SIZE];
 		
@@ -438,7 +447,7 @@ Date        Description
 
 #if defined(USART0_ENABLED)
 
-#if defined(AT90_UART) || defined(ATMEGA_USART) || defined(ATMEGA_USART0)
+#if defined(AT90_UART) || defined(ATMEGA_USART) || defined(ATMEGA_USART0)  || defined(AVR1_USART0)
 
 ISR(UART0_RECEIVE_INTERRUPT)
 /*************************************************************************
@@ -452,8 +461,13 @@ Purpose:  called when the UART has received a character
     uint8_t lastRxError;
  
     /* read UART status register and UART data register */ 
+#if defined(AVR1_USART0)
+    usr  = USART0_RXDATAH;
+    data = USART0.RXDATAL;
+#else
     usr  = UART0_STATUS;
     data = UART0_DATA;
+#endif
     
     /* */
 #if defined(AT90_UART)
@@ -464,6 +478,8 @@ Purpose:  called when the UART has received a character
     lastRxError = (usr & (_BV(FE0)|_BV(DOR0)));
 #elif defined (ATMEGA_UART)
     lastRxError = (usr & (_BV(FE)|_BV(DOR)));
+#elif defined (AVR1_USART0)
+    lastRxError = (usr & (USART_BUFOVF_bm | USART_FERR_bm | USART_PERR_bm));
 #endif
         
     /* calculate buffer index */ 
@@ -495,10 +511,18 @@ Purpose:  called when the UART is ready to transmit the next byte
         tmptail = (UART_TxTail + 1) & UART_TX0_BUFFER_MASK;
         UART_TxTail = tmptail;
         /* get one byte from buffer and write it to UART */
+#if defined(AVR1_USART0)
+        USART0_TXDATAL = UART_TxBuf[tmptail];  /* start transmission */
+#else
         UART0_DATA = UART_TxBuf[tmptail];  /* start transmission */
+#endif
     } else {
         /* tx buffer empty, disable UDRE interrupt */
+#if defined(AVR1_USART0)
+        USART0_CTRLA &= ~USART_DREIE_bm;
+#else
         UART0_CONTROL &= ~_BV(UART0_UDRIE);
+#endif
     }
 }
 
@@ -509,7 +533,7 @@ Purpose:  initialize UART and set baudrate
 Input:    baudrate using macro UART_BAUD_SELECT()
 Returns:  none
 **************************************************************************/
-void uart0_init(uint16_t baudrate)
+void uart0_init(uint32_t baudrate)
 {
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {
 		UART_TxHead = 0;
@@ -575,6 +599,13 @@ void uart0_init(uint16_t baudrate)
 	/* Enable UART receiver and transmitter and receive complete interrupt */
 	UART0_CONTROL = _BV(RXCIE)|(1<<RXEN)|(1<<TXEN);
 
+#elif defined (AVR1_USART0)
+    // set the baud rate
+    USART0.BAUD = USART0_BAUD_RATE(baudrate);
+
+    USART0.CTRLA = USART_RXCIE_bm;
+    USART0.CTRLB = USART_TXEN_bm | USART_RXEN_bm | USART_RXMODE_NORMAL_gc;
+    // Default configuration of CTRLC is 8N1 in asynchronous mode
 #endif
 
 } /* uart0_init */
@@ -670,7 +701,11 @@ void uart0_putc(uint8_t data)
 	UART_TxHead = tmphead;
 
 	/* enable UDRE interrupt */
+#if defined(AVR1_USART0)
+    USART0_CTRLA |= USART_DREIE_bm;
+#else
 	UART0_CONTROL |= _BV(UART0_UDRIE);
+#endif
 
 } /* uart0_putc */
 
