@@ -325,7 +325,7 @@ Date        Description
 	#define UART0_CONTROL  UCSR0B
 	#define UART0_DATA     UDR0
 	#define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega164P__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega644P__) || \
+#elif defined(__AVR_ATmega164P__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) ||  \
       defined(__AVR_ATmega1284P__)
 	/* ATmega with two USART */
 	#define ATMEGA_USART0
