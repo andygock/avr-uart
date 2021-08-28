@@ -22,19 +22,19 @@ The `UART_RXn_BUFFER_SIZE` and `UART_TXn_BUFFER_SIZE` symbols define
 the size of the circular buffers in bytes. These values **must be a power of 2**.
 You may need to adapt this symbols to your target and your application by adding into your compiler options:
 
-  -DUART_RXn_BUFFER_SIZE=nn -DUART_TXn_BUFFER_SIZE=nn
+    -DUART_RXn_BUFFER_SIZE=nn -DUART_TXn_BUFFER_SIZE=nn
 
 `RXn` and `TXn` refer to the UART number, for UART3 with 128 byte buffers, add:
 
-  -DUART_RX3_BUFFER_SIZE=128 -DUART_TX3_BUFFER_SIZE=128
+    -DUART_RX3_BUFFER_SIZE=128 -DUART_TX3_BUFFER_SIZE=128
 
 UART0 is always enabled by default, to enable the other available UARTs, add the following to your compiler's symbol options for the relevant UART (also known as USART) number.
 
-  -DUSART1_ENABLED -DUSART2_ENABLED -DUSART3_ENABLED
+    -DUSART1_ENABLED -DUSART2_ENABLED -DUSART3_ENABLED
 
 To enable large buffer support (over 256 bytes, up to 2^15 bytes) use:
 
-  -DUSARTn_LARGE_BUFFER
+    -DUSARTn_LARGE_BUFFER
 
 Where `n` is the USART number. The maximum buffer size is 32768 bytes.
 
@@ -44,7 +44,7 @@ This library supports AVR devices with up to 4 hardware USARTs.
 
 Define `F_CPU` in your Makefile or compiler examples. Example, if you're running a 8 MHz clock, then use:
 
-  -DF_CPU=8000000UL
+    -DF_CPU=8000000UL
 
 ### Compiler flags
 
