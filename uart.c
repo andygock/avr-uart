@@ -141,8 +141,10 @@ Date        Description
 #endif
 
 #if defined(__AVR_AT90S2313__) \
- || defined(__AVR_AT90S4414__) || defined(__AVR_AT90S4434__) \
- || defined(__AVR_AT90S8515__) || defined(__AVR_AT90S8535__) \
+ || defined(__AVR_AT90S4414__) \
+ || defined(__AVR_AT90S4434__) \
+ || defined(__AVR_AT90S8515__) \
+ || defined(__AVR_AT90S8535__) \
  || defined(__AVR_ATmega103__)
 	/* old AVR classic or ATmega103 with one UART */
 	#define AT90_UART
@@ -152,7 +154,8 @@ Date        Description
 	#define UART0_CONTROL  UCR
 	#define UART0_DATA     UDR
 	#define UART0_UDRIE    UDRIE
-#elif defined(__AVR_AT90S2333__) || defined(__AVR_AT90S4433__)
+#elif defined(__AVR_AT90S2333__) \
+   || defined(__AVR_AT90S4433__)
 	/* old AVR classic with one UART */
 	#define AT90_UART
 	#define UART0_RECEIVE_INTERRUPT   UART_RX_vect
@@ -161,8 +164,10 @@ Date        Description
 	#define UART0_CONTROL  UCSRB
 	#define UART0_DATA     UDR
 	#define UART0_UDRIE    UDRIE
-#elif  defined(__AVR_ATmega8__)  || defined(__AVR_ATmega16__) || defined(__AVR_ATmega32__) \
-  || defined(__AVR_ATmega323__)
+#elif defined(__AVR_ATmega8__) \
+   || defined(__AVR_ATmega16__) \
+   || defined(__AVR_ATmega32__) \
+   || defined(__AVR_ATmega323__)
 	/* ATmega with one USART */
 	#define ATMEGA_USART
 	#define UART0_RECEIVE_INTERRUPT   USART_RXC_vect
@@ -171,8 +176,12 @@ Date        Description
 	#define UART0_CONTROL  UCSRB
 	#define UART0_DATA     UDR
 	#define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega8U2__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega16U4__) || \
-      defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega32U6__)
+#elif defined(__AVR_ATmega8U2__) \
+   || defined(__AVR_ATmega16U2__) \
+   || defined(__AVR_ATmega16U4__) \
+   || defined(__AVR_ATmega32U2__) \
+   || defined(__AVR_ATmega32U4__) \
+   || defined(__AVR_ATmega32U6__)
 	/* ATmega with one USART, but is called USART1 (untested) */
 	#define ATMEGA_USART1
 	#define UART1_RECEIVE_INTERRUPT   USART1_RX_vect
@@ -181,7 +190,8 @@ Date        Description
 	#define UART1_CONTROL  UCSR1B
 	#define UART1_DATA     UDR1
 	#define UART1_UDRIE    UDRIE1
-#elif  defined(__AVR_ATmega8515__) || defined(__AVR_ATmega8535__)
+#elif defined(__AVR_ATmega8515__) \
+   || defined(__AVR_ATmega8535__)
 	/* ATmega with one USART */
 	#define ATMEGA_USART
 	#define UART0_RECEIVE_INTERRUPT   USART_RX_vect
@@ -215,7 +225,8 @@ Date        Description
 	#define UART1_CONTROL  UCSR1B
 	#define UART1_DATA     UDR1
 	#define UART1_UDRIE    UDRIE1
-#elif defined(__AVR_ATmega64__) || defined(__AVR_ATmega128__)
+#elif defined(__AVR_ATmega64__) \
+   || defined(__AVR_ATmega128__)
 	/* ATmega with two USART */
 	#define ATMEGA_USART0
 	#define ATMEGA_USART1
@@ -243,9 +254,13 @@ Date        Description
 	#define UART0_CONTROL  UCSRB
 	#define UART0_DATA     UDR
 	#define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega48__) ||defined(__AVR_ATmega88__) || defined(__AVR_ATmega168__) || \
-      defined(__AVR_ATmega48P__) ||defined(__AVR_ATmega88P__) || defined(__AVR_ATmega168P__) || \
-      defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega48__) \
+   || defined(__AVR_ATmega88__) \
+   || defined(__AVR_ATmega168__) \
+   || defined(__AVR_ATmega48P__) \
+   || defined(__AVR_ATmega88P__) \
+   || defined(__AVR_ATmega168P__) \
+   || defined(__AVR_ATmega328P__)
 	/* TLS-Added 48P/88P/168P/328P */
 	/* ATmega with one USART */
 	#define ATMEGA_USART0
@@ -255,7 +270,9 @@ Date        Description
 	#define UART0_CONTROL  UCSR0B
 	#define UART0_DATA     UDR0
 	#define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATtiny2313__) || defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny4313__)
+#elif defined(__AVR_ATtiny2313__) \
+   || defined(__AVR_ATtiny2313A__) \
+   || defined(__AVR_ATtiny4313__)
 	#define ATMEGA_USART
 	#define UART0_RECEIVE_INTERRUPT   USART_RX_vect
 	#define UART0_TRANSMIT_INTERRUPT  USART_UDRE_vect
@@ -263,10 +280,12 @@ Date        Description
 	#define UART0_CONTROL  UCSRB
 	#define UART0_DATA     UDR
 	#define UART0_UDRIE    UDRIE
-#elif defined(__AVR_ATmega329__) ||\
-      defined(__AVR_ATmega649__) ||\
-      defined(__AVR_ATmega325__) ||defined(__AVR_ATmega3250__) ||\
-      defined(__AVR_ATmega645__) ||defined(__AVR_ATmega6450__)
+#elif defined(__AVR_ATmega329__) \
+   || defined(__AVR_ATmega649__) \
+   || defined(__AVR_ATmega325__) \
+   || defined(__AVR_ATmega3250__) \
+   || defined(__AVR_ATmega645__) \
+   || defined(__AVR_ATmega6450__)
 	/* ATmega with one USART */
 	#define ATMEGA_USART0
 	#define UART0_RECEIVE_INTERRUPT   USART0_RX_vect
@@ -275,8 +294,8 @@ Date        Description
 	#define UART0_CONTROL  UCSR0B
 	#define UART0_DATA     UDR0
 	#define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega3290__) ||\
-      defined(__AVR_ATmega6490__)
+#elif defined(__AVR_ATmega3290__) \
+   || defined(__AVR_ATmega6490__)
 	/* TLS-Separated these two from the previous group because of inconsistency in the USART_RX */
 	/* ATmega with one USART */
 	#define ATMEGA_USART0
@@ -286,7 +305,9 @@ Date        Description
 	#define UART0_CONTROL  UCSR0B
 	#define UART0_DATA     UDR0
 	#define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega640__)
+#elif defined(__AVR_ATmega2560__) \
+   || defined(__AVR_ATmega1280__) \
+	 || defined(__AVR_ATmega640__)
 	/* ATmega with four USART */
 	#define ATMEGA_USART0
 	#define ATMEGA_USART1
@@ -325,8 +346,11 @@ Date        Description
 	#define UART0_CONTROL  UCSR0B
 	#define UART0_DATA     UDR0
 	#define UART0_UDRIE    UDRIE0
-#elif defined(__AVR_ATmega164P__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) ||  \
-      defined(__AVR_ATmega1284P__)
+#elif defined(__AVR_ATmega164P__) \
+   || defined(__AVR_ATmega324P__) \
+   || defined(__AVR_ATmega644P__) \
+   || defined(__AVR_ATmega644PA__) \
+   || defined(__AVR_ATmega1284P__)
 	/* ATmega with two USART */
 	#define ATMEGA_USART0
 	#define ATMEGA_USART1
@@ -347,7 +371,7 @@ Date        Description
 	#define AVR1_USART0
 	#define UART0_RECEIVE_INTERRUPT   USART0_RXC_vect
 	#define UART0_TRANSMIT_INTERRUPT  USART0_DRE_vect
-  #define USART0_BAUD_RATE(_br_)      (uint16_t)((float)(F_CPU * 64 / (16 * (float)(_br_)) + 0.5))
+  #define USART0_BAUD_RATE(_br_)    (uint16_t)((float)(F_CPU * 64 / (16 * (float)(_br_)) + 0.5))
   //	#error "AVR ATtiny814 currently not supported by this libaray !"
 #else
 	#error "no UART definition for MCU available"
