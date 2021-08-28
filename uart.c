@@ -18,7 +18,7 @@
 	http://beaststwo.org/avr-uart/index.shtml
 
 	Based on original library by Peter Fluery
-	http://homepage.hispeed.ch/peterfleury/avr-software.html
+	http://www.peterfleury.epizy.com/avr-software.html
 
 *************************************************************************/
 
