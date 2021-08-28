@@ -358,7 +358,7 @@ Date        Description
  */
 
 #if defined(USART0_ENABLED)
-    #if defined(ATMEGA_USART) || defined(ATMEGA_USART0) || defined (AVR1_USART0)
+    #if defined(ATMEGA_USART) || defined(ATMEGA_USART0) || defined(AVR1_USART0) || defined(AT90_UART)
 		static volatile uint8_t UART_TxBuf[UART_TX0_BUFFER_SIZE];
 		static volatile uint8_t UART_RxBuf[UART_RX0_BUFFER_SIZE];
 
