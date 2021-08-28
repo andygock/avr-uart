@@ -16,6 +16,8 @@ for buffering received and transmitted data.
 
 ## Setting up
 
+### Define USARTs enabled and buffer sizes
+
 The `UART_RXn_BUFFER_SIZE` and `UART_TXn_BUFFER_SIZE` symbols define
 the size of the circular buffers in bytes. These values **must be a power of 2**.
 You may need to adapt this symbols to your target and your application by adding into your compiler options:
@@ -37,6 +39,12 @@ To enable large buffer support (over 256 bytes, up to 2^15 bytes) use:
 Where `n` is the USART number. The maximum buffer size is 32768 bytes.
 
 This library supports AVR devices with up to 4 hardware USARTs.
+
+### Define CPU frequency
+
+Define `F_CPU` in your Makefile or compiler examples. Example, if you're running a 8 MHz clock, then use:
+
+  -DF_CPU=8000000UL
 
 ### Compiler flags
 
