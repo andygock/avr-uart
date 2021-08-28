@@ -235,7 +235,7 @@ were adapted from the Arduino HardwareSerial.h library by Tim Sharpe on
    @param   baudrate Specify baudrate using macro UART_BAUD_SELECT()
    @return  none
 */
-#if defined (AVR1_USART0)
+#if defined(AVR1_USART0)
 extern void uart0_init(uint32_t baudrate);
 #else
 extern void uart0_init(uint16_t baudrate);

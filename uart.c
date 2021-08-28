@@ -498,9 +498,9 @@ Purpose:  called when the UART has received a character
     lastRxError = (usr & (_BV(FE)|_BV(DOR)));
 #elif defined(ATMEGA_USART0)
     lastRxError = (usr & (_BV(FE0)|_BV(DOR0)));
-#elif defined (ATMEGA_UART)
+#elif defined(ATMEGA_UART)
     lastRxError = (usr & (_BV(FE)|_BV(DOR)));
-#elif defined (AVR1_USART0)
+#elif defined(AVR1_USART0)
     lastRxError = (usr & (USART_BUFOVF_bm | USART_FERR_bm | USART_PERR_bm));
 #endif
 
@@ -555,7 +555,7 @@ Purpose:  initialize UART and set baudrate
 Input:    baudrate using macro UART_BAUD_SELECT()
 Returns:  none
 **************************************************************************/
-#if defined (AVR1_USART0)
+#if defined(AVR1_USART0)
 void uart0_init(uint32_t baudrate)
 #else
 void uart0_init(uint16_t baudrate)
@@ -575,7 +575,7 @@ void uart0_init(uint16_t baudrate)
 	/* enable UART receiver and transmitter and receive complete interrupt */
 	UART0_CONTROL = _BV(RXCIE)|_BV(RXEN)|_BV(TXEN);
 
-#elif defined (ATMEGA_USART)
+#elif defined(ATMEGA_USART)
 	/* Set baud rate */
 	if (baudrate & 0x8000) {
 		UART0_STATUS = (1<<U2X);  //Enable 2x speed
@@ -594,7 +594,7 @@ void uart0_init(uint16_t baudrate)
 	UCSRC = (3<<UCSZ0);
 #endif
 
-#elif defined (ATMEGA_USART0)
+#elif defined(ATMEGA_USART0)
 	/* Set baud rate */
 	if (baudrate & 0x8000) {
 		UART0_STATUS = (1<<U2X0);  //Enable 2x speed
@@ -613,7 +613,7 @@ void uart0_init(uint16_t baudrate)
 	UCSR0C = (3<<UCSZ00);
 #endif
 
-#elif defined (ATMEGA_UART)
+#elif defined(ATMEGA_UART)
 	/* set baud rate */
 	if (baudrate & 0x8000) {
 		UART0_STATUS = (1<<U2X);  //Enable 2x speed
@@ -625,7 +625,7 @@ void uart0_init(uint16_t baudrate)
 	/* Enable UART receiver and transmitter and receive complete interrupt */
 	UART0_CONTROL = _BV(RXCIE)|(1<<RXEN)|(1<<TXEN);
 
-#elif defined (AVR1_USART0)
+#elif defined(AVR1_USART0)
     // set the baud rate
     USART0.BAUD = USART0_BAUD_RATE(baudrate);
 
