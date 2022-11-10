@@ -226,6 +226,12 @@ were adapted from the Arduino HardwareSerial.h library by Tim Sharpe on
 /** @brief Macro to flush bytes waiting in receive buffer of USART0 @see uart0_flush */
 #define uart_flush()      uart0_flush()
 
+
+#if defined(__AVR_ATtiny814__) || defined(__AVR_ATtiny1616__)
+# define AVR1_USART0
+#endif
+
+
 /*
 ** function prototypes
 */
