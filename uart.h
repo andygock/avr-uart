@@ -236,6 +236,11 @@ were adapted from the Arduino HardwareSerial.h library by Tim Sharpe on
 ** function prototypes
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /**
    @brief   Initialize UART and set baudrate
    @param   baudrate Specify baudrate using macro UART_BAUD_SELECT()
@@ -438,6 +443,11 @@ extern uint16_t uart3_available(void);
 
 /** @brief  Flush bytes waiting in receive buffer of USART3 */
 extern void uart3_flush(void);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 /**@}*/
 
