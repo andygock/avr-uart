@@ -366,7 +366,7 @@ Date        Description
 	#define UART1_CONTROL  UCSR1B
 	#define UART1_DATA     UDR1
 	#define UART1_UDRIE    UDRIE1
-#elif defined(__AVR_ATtiny814__) || defined(__AVR_ATtiny1616__)
+#elif defined(AVR1_USART0)
     /* AVR-1 with USART */
 	#define UART0_RECEIVE_INTERRUPT   USART0_RXC_vect
 	#define UART0_TRANSMIT_INTERRUPT  USART0_DRE_vect
