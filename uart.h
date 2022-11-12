@@ -226,9 +226,20 @@ were adapted from the Arduino HardwareSerial.h library by Tim Sharpe on
 /** @brief Macro to flush bytes waiting in receive buffer of USART0 @see uart0_flush */
 #define uart_flush()      uart0_flush()
 
+
+#if defined(__AVR_ATtiny814__) || defined(__AVR_ATtiny1616__)
+# define AVR1_USART0
+#endif
+
+
 /*
 ** function prototypes
 */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /**
    @brief   Initialize UART and set baudrate
@@ -432,6 +443,11 @@ extern uint16_t uart3_available(void);
 
 /** @brief  Flush bytes waiting in receive buffer of USART3 */
 extern void uart3_flush(void);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 /**@}*/
 
